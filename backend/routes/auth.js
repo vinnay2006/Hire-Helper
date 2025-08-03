@@ -1,10 +1,12 @@
 const express=require("express")
 const User=require("../models/User")
+const History=require("../models/History")
 const { body, validationResult } = require('express-validator');
 const router=express.Router();
 const bcrypt=require('bcryptjs')
 var jwt=require("jsonwebtoken")
-var fetchuser=require('../middleware/fetchuser')
+var fetchuser=require('../middleware/fetchuser');
+const { UNSAFE_createBrowserHistory } = require("react-router-dom");
 const JWT_SECRET="vinayisagooddebator"
 //creating a new user using new request that hits end point /api/auth/createuser
 router.post('/createuser',  [
@@ -102,7 +104,23 @@ router.post('/getuser',fetchuser, async(req,res)=>{
     res.status(500).send("Internal Server Error");
    }
   })
-
+  //RELATED TO USER HISTORY TO SHOW IN ITS PERSONAL DASHBOARD
+  router.post('/addhistory',fetchuser,async(req,res)=>{
+try {
+ const {name,email,mobile_no,category,location} =req.body;
+ const history=new History({
+  name,email,mobile_no,category,location,user:req.user.id
+ })
+ const savedHistory=await history.save();
+ res.json(savedHistory)
+} catch (error) {
+    res.status(500).send("Internal Server Error");
+}
+  })
+router.get('/UserHistory',fetchuser, async(req,res)=>{
+ const history=await History.find({user:req.user.id});
+ res.json(history)
+  })
 
 
 module.exports=router
