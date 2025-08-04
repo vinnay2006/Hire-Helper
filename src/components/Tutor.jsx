@@ -35,7 +35,7 @@ function Tutor() {
     e.preventDefault();
 console.log(localStorage.getItem('token'))
     try {
-      const response = await fetch('http://localhost:5000/api/auth/addhistory', {
+      const response = await fetch("http://localhost:5000/api/auth/addhistory", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

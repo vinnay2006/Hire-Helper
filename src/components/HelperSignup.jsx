@@ -35,7 +35,7 @@ const navigate=useNavigate();
 
       if (response.ok) {
         localStorage.setItem("token",data.authtoken);
-        navigate("/")
+        navigate("/login")
         console.log(data);
       } else {
         alert(data.message || "Something went wrong");

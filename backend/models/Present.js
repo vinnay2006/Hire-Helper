@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const {Schema}=mongoose
-const HistorySchema = new mongoose.Schema({
+const PresentSchema = new mongoose.Schema({
  user:{
   type: mongoose.Schema.Types.ObjectId, 
  ref:"user"
@@ -34,6 +34,6 @@ const HistorySchema = new mongoose.Schema({
   },
 });
 
-const History = mongoose.model('History', HistorySchema);
+const Present = mongoose.model('Present', PresentSchema);
 
-module.exports = History;
+module.exports = Present;
