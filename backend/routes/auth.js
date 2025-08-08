@@ -1,6 +1,7 @@
 const express=require("express")
 const User=require("../models/User")
 const History=require("../models/History")
+const Present=require("../models/Present")
 const { body, validationResult } = require('express-validator');
 const router=express.Router();
 const bcrypt=require('bcryptjs')
@@ -94,7 +95,7 @@ if(!passkeycomp){
 
 
 })
-router.post('/getuser',fetchuser, async(req,res)=>{
+router.get('/getClient',fetchuser, async(req,res)=>{
    try {
     userId=req.user.id;
     const user=await User.findById(userId).select("-password")
@@ -121,6 +122,44 @@ router.get('/UserHistory',fetchuser, async(req,res)=>{
  const history=await History.find({user:req.user.id});
  res.json(history)
   })
+//realted to active present of user
+  router.post('/addActivePresent',fetchuser,async(req,res)=>{
+try {
+ const {name,email,mobile_no,category,location} =req.body;
+ const present=new Present({
+  name,email,mobile_no,category,location,user:req.user.id
+ })
+ const savedPresent=await present.save();
+ res.json(savedPresent)
+} catch (error) {
+    res.status(500).send("Internal Server Error");
+}
+  })
+
+  router.get('/UserPresent',fetchuser, async(req,res)=>{
+ const present=await Present.find({user:req.user.id});
+ res.json(present)
+  })
+ // DELETE /api/auth/deleteActiveUser/:id
+router.delete('/deleteActiveUser/:id', fetchuser, async (req, res) => {
+  try {
+    // Find the document with matching ID and owned by this user
+    const present = await Present.findOne({ _id: req.params.id, user: req.user.id });
+
+if (!present) {
+  return res.status(404).json({ success: false, message: "Not found or unauthorized" });
+}
+
+
+    await Present.findByIdAndDelete(req.params.id);
+
+    res.json({ success: true, message: "Present deleted successfully", deleted: present });
+  } catch (error) {
+    console.error("Delete error:", error.message);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
 
 
 module.exports=router

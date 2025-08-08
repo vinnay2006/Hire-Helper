@@ -29,6 +29,10 @@ const HelperSchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
+  },
+  available: {
+    type: Boolean,
+    default: false,
   }
 
 });

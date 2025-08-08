@@ -12,8 +12,10 @@ import HelperSignup from './components/HelperSignup';
 import HelperState from './context/helpers/HelperState';
 import AuthState from './context/helpers/AuthState';
 import About from './components/About';
+import HelperDashboard from './components/HelperDashboard';
 import HireHelper from './components/HireHelper';
-
+import Feedback from './components/Feedback';
+import Details from './components/Details'
 function App() {
   return (
     <>
@@ -31,6 +33,9 @@ function App() {
          <Route path="/HelperSignup" element={< HelperSignup/>} />
          <Route path="/dashboard" element={<Dashboard />} />
          <Route path="/hire" element={<HireHelper />} />
+         <Route path="/HelperDashboard" element={<HelperDashboard />} />
+         <Route path="/feedback" element={<Feedback />} />
+         <Route path="/details" element={<Details />} />
       </Routes>
     </div>
    </HelperState>

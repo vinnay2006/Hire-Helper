@@ -3,7 +3,7 @@ const {Schema}=mongoose
 const PresentSchema = new mongoose.Schema({
  user:{
   type: mongoose.Schema.Types.ObjectId, 
- ref:"user"
+ ref:"user",
  },
   name: {
     type: String,
@@ -14,6 +14,7 @@ const PresentSchema = new mongoose.Schema({
     type: String,
     required: true,
     lowercase: true,
+    
   },
  
   mobile_no: {

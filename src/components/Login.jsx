@@ -6,7 +6,7 @@ import AuthContext from '../context/helpers/AuthContext';
 
 
 function Login() {
- const{setToken}=useContext(AuthContext)
+ const{setToken,setLoginType}=useContext(AuthContext)
   const [formData, setFormData] = useState({
       email: '',
       password: '',
@@ -38,6 +38,8 @@ const handleSubmit = async (e) => {
       if (response.ok) {
       localStorage.setItem("token",data.authtoken);
       setToken(data.authtoken)
+         localStorage.setItem("type","user");
+         setLoginType("user")
         navigate("/")
         console.log(data);
       } else {
@@ -62,7 +64,10 @@ const handleSubmit = async (e) => {
 
       if (response.ok) {
           localStorage.setItem("token",data.authtoken);
+          
       setToken(data.authtoken)
+       localStorage.setItem("type","helper");
+        setLoginType("helper")
         navigate("/")
         console.log(data);
       } else {
