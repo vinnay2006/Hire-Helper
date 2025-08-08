@@ -30,6 +30,16 @@ const HelperSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
+    experience: {
+    type: String,
+    required: true,
+  default:"0 ",
+  },
+   charges: {
+    type: String,
+    required: true,
+  default:"0 ",
+  },
   available: {
     type: Boolean,
     default: false,

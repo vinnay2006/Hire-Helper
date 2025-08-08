@@ -5,7 +5,7 @@ const [token,setToken]=useState(() => localStorage.getItem("token"));
 const[loginType,setLoginType]=useState(()=>localStorage.getItem("type"));
 const [details,setDetails]=useState();
 const clientDetails=async()=>{
-
+if(localStorage.getItem("type")==="user"){
    const response=await fetch("http://localhost:5000/api/auth/getClient",{
       method:"GET",
       headers:{
@@ -13,7 +13,17 @@ const clientDetails=async()=>{
       }
    });
 const json=await response.json()
+setDetails(json)}
+else if(localStorage.getItem("type")==="helper"){
+      const response=await fetch("http://localhost:5000/api/HelperAuth/getClient",{
+      method:"GET",
+      headers:{
+         "auth-token":localStorage.getItem("token")
+      }
+   });
+const json=await response.json()
 setDetails(json)
+}
 }
  return(
  

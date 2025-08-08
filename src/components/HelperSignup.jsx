@@ -9,7 +9,9 @@ function HelperSignup() {
     password: '',
     category:'',
     mobile_no: '',
-    location: ''
+    location: '',
+    experience:'',
+    charges:'',
   });
 
   const handleChange = (e) => {
@@ -34,7 +36,6 @@ const navigate=useNavigate();
       const data = await response.json();
 
       if (response.ok) {
-        localStorage.setItem("token",data.authtoken);
         navigate("/login")
         console.log(data);
       } else {
@@ -73,6 +74,14 @@ const navigate=useNavigate();
    <div className="mb-3">
     <label htmlFor="exampleInputcategory" className="form-label">Category</label>
     <input type="text" className="form-control" id="category" name="category" value={formData.category}onChange={handleChange} required />
+  </div>
+   <div className="mb-3">
+    <label htmlFor="exampleInputexperience" className="form-label">Experience(years)</label>
+    <input type="text" className="form-control" id="experience" name="experience" value={formData.experience}onChange={handleChange} required />
+  </div>
+    <div className="mb-3">
+    <label htmlFor="exampleInputcharges" className="form-label">charges($ per hour)</label>
+    <input type="text" className="form-control" id="charges" name="charges" value={formData.charges}onChange={handleChange} required />
   </div>
   <div className="mb-3">
     <label htmlFor="exampleInputmobile_no" className="form-label">mobile_no</label>

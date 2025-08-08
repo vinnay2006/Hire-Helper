@@ -5,6 +5,7 @@ const router=express.Router();
 const bcrypt=require('bcryptjs')
 var jwt=require("jsonwebtoken")
 var fetchuser=require('../middleware/fetchuser')
+var fetchhelper=require('../middleware/fetchhelper')
 const JWT_SECRET="vinayisagooddebator"
 //creating a new user using new request that hits end point /api/auth/createuser
 router.post('/createuser',  [
@@ -27,14 +28,14 @@ router.post('/createuser',  [
       return res.status(400).json({ errors: errors.array() });
     }
  try {
-    const{name,email,password,category,mobile_no,location}=req.body;
+    const{name,email,password,category,experience,charges,mobile_no,location}=req.body;
   const salt= await bcrypt.genSalt(10);
   secPass= await bcrypt.hash(password,salt);
    const existingHelper= await Helper.findOne({email:req.body.email})
    if(existingHelper){
      return res.status(400).json({ message:"email not available try login with this email not signUp" }); 
    }
-   const helper = new Helper({ name,email,password:secPass,category,mobile_no,location});
+   const helper = new Helper({ name,email,password:secPass,category,experience,charges,mobile_no,location});
     await helper.save();  
       const data={
     helper:{
@@ -93,8 +94,18 @@ if(!passkeycomp){
  router.get('/gethelpers',fetchuser, async(req,res)=>{
 
    const helpers=await Helper.find({
-location:req.user.location
+   location:req.user.location
    });
    res.json(helpers);
 })
+router.get('/getClient',fetchhelper, async(req,res)=>{
+   try {
+    helperId=req.helper.id;
+    const helper=await Helper.findById(helperId).select("-password")
+    res.send(helper)
+   } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Internal Server Error");
+   }
+  })
 module.exports=router
