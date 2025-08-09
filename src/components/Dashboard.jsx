@@ -4,7 +4,11 @@ import {useNavigate,Link} from "react-router-dom"
 function Dashboard() {
   const handleCall=()=>{
  
-    prompt("enter the room no to start a video call with the helper")
+    const roomId= prompt("enter the room no to start a video call with the helper");
+    console.log(roomId);
+    if(roomId){
+      navigate(`/callroom/${roomId}`);
+    }
   }
   const navigate=useNavigate();
   const context=useContext(HelperContext);

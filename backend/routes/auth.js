@@ -160,6 +160,46 @@ if (!present) {
   }
 });
 
+router.put('/updateDetails/:id', fetchuser, async (req, res) => {
+  const { name, email, mobile_no, location } = req.body;
+  const newDetails = {};
 
+  if (name) newDetails.name = name;
+  if (email) newDetails.email = email;
+  if (location) newDetails.location = location;
+  if (mobile_no) newDetails.mobile_no = mobile_no;
+
+  let client = await User.findById(req.params.id);
+  if (!client) {
+    return res.status(404).send("not found");
+  }
+
+
+  if (client.id.toString() !== req.user.id) {
+    return res.status(401).send("not allowed");
+  }
+
+  client = await User.findByIdAndUpdate(
+    req.params.id,
+    { $set: newDetails },
+    { new: true }
+  );
+  
+  res.json({ client });
+});
+
+/* creating a  delete request for api/notes/deletenote
+router.delete('/deletenote/:id', fetchuser, async (req, res) => {
+
+ 
+  let note = await Notes.findById(req.params.id);
+  if(!note){return res.status(404).send("not found")}
+  if(note.user.toString()!==req.user.id){
+    return res.status(401).send("not allowed")
+  }
+  note=await Notes.findByIdAndDelete(req.params.id);
+  res.json({"success":"Note has been deleted",note:note});
+});
+*/
 
 module.exports=router

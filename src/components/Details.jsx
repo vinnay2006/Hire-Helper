@@ -1,14 +1,78 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect,useState } from 'react';
 import AuthContext from "../context/helpers/AuthContext";
 
 function Details() {
   const { details, clientDetails } = useContext(AuthContext);
+ const initialFormState = localStorage.getItem("type") === "user"
+  ? { name: "", email: "", location: "", mobile_no: "" }
+  : { name: "", email: "", location: "", mobile_no: "", experience: "", charges: "",available:"" };
+
+const [formData, setFormData] = useState(initialFormState);
+
+  useEffect(() => {
+    if (localStorage.getItem("type")==="user"&&details && formData.name === "") {
+      setFormData({
+        name: details.name || '',
+        mobile_no: details.mobile_no || '',
+        location: details.location || '',
+        email: details.email || ''
+      });
+    }else if(localStorage.getItem("type")==="helper"&&details && formData.name === ""){
+      setFormData({
+        name: details.name || '',
+        mobile_no: details.mobile_no || '',
+        location: details.location || '',
+        email: details.email || '',
+        experience: details.experience || '',
+        charges: details.charges || '',
+        available: details.available || ''
+      }); 
+    }
+  }, [details]);
+   const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
 
   useEffect(() => {
     clientDetails();
-  }, []);
+  }, [clientDetails]);
+   const handleUpdate = async (e) => {
+    
+    try {
+      e.preventDefault();
+      let endpoint=null;
+      if(localStorage.getItem("type")==="user"){
+         endpoint="auth";
+      }
+      else if(localStorage.getItem("type")==="helper"){
+          endpoint="HelperAuth";
+      }
+      const res = await fetch(`http://localhost:5000/api/${endpoint}/updateDetails/${details._id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token")
+        },
+        body: JSON.stringify(formData)
+      });
 
-  // Optional: loading fallback
+      if (!res.ok) {
+      const errorText = await res.text();
+      throw new Error(`Failed to update details: ${errorText}`);
+      }
+
+      // Refreshing after update
+      clientDetails();
+      alert("Details updated successfully!");
+    } catch (error) {
+      console.error(error);
+      alert("Error updating details");
+    }
+  };
+
   if (!details) {
     return <div style={{ marginTop: "20px" }}><h4>Loading your details...</h4></div>;
   }
@@ -27,11 +91,83 @@ function Details() {
       }}>
         <div className="row">
           <div className="card col-md-3 me-5" style={{ width: "20rem", textAlign: "left" }}>
-            <div className="card-body">
-              <h6 className="card-title">Name: {details.name}</h6><br />
-              <h6 className="card-title">Email: {details.email}</h6><br />
-              <h6 className="card-title">Location: {details.location}</h6><br />
-              <h6 className="card-title">Mobile No.: {details.mobile_no}</h6>
+            <div className="card-body"> 
+              {localStorage.getItem("type") === "user" ? (
+  <>
+    <h6 className="card-title">Name: {details.name}</h6><br />
+    <h6 className="card-title">Email: {details.email}</h6><br />
+    <h6 className="card-title">Location: {details.location}</h6><br />
+    <h6 className="card-title">Mobile No.: {details.mobile_no}</h6>
+  </>
+) : (
+  <>
+    <h6 className="card-title">Name: {details.name}</h6><br />
+    <h6 className="card-title">Email: {details.email}</h6><br />
+    <h6 className="card-title">Location: {details.location}</h6><br />
+    <h6 className="card-title">Mobile No.: {details.mobile_no}</h6><br/>
+    <h6 className="card-title">Experience: {details.experience}</h6><br />
+    <h6 className="card-title">Charges: {details.charges}</h6><br/>
+    <h6 className="card-title">available: {details.available}</h6>
+  </>
+)}
+
+
+              
+              <i
+                className="fa-solid fa-pen mx-2"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+                style={{ cursor: "pointer" }}
+              ></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Modal JSX - always mounted */}
+      <div
+        className="modal fade"
+        id="exampleModal"
+        tabIndex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h1 className="modal-title fs-5" id="exampleModalLabel">Edit Details</h1>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              <form >
+                {localStorage.getItem("type")==="user"?(<>
+               <input type="text" name="name" className="form-control mb-2" onChange={handleChange}  value={formData.name}/>
+              <input type="email"  name ="email" className="form-control mb-2"  onChange={handleChange}  value={formData.email}/> 
+              <input type="text" name ="location" className="form-control mb-2" onChange={handleChange}  value={formData.location}/> 
+              <input type="text"  name ="mobile_no" className="form-control mb-2"  onChange={handleChange}  value={formData.mobile_no}/> </>):
+             (<>
+               <input type="text" name="name" className="form-control mb-2" onChange={handleChange}  value={formData.name}/>
+              <input type="email"  name ="email" className="form-control mb-2"  onChange={handleChange}  value={formData.email}/> 
+              <input type="text" name ="location" className="form-control mb-2" onChange={handleChange}  value={formData.location}/> 
+              <input type="text"  name ="mobile_no" className="form-control mb-2"  onChange={handleChange}  value={formData.mobile_no}/> 
+               <input type="text"  name ="experience" className="form-control mb-2"  onChange={handleChange}  value={formData.experience}/>
+                <input type="text"  name ="charges" className="form-control mb-2"  onChange={handleChange}  value={formData.charges}/>
+                <input type="boolean"  name ="available" className="form-control mb-2"  onChange={handleChange}  value={formData.available}/></>)
+             }
+              </form>
+            </div>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
+                Close
+              </button>
+              <button type="submit" className="btn btn-primary"onClick={handleUpdate}>
+                update
+              </button>
             </div>
           </div>
         </div>
@@ -41,4 +177,3 @@ function Details() {
 }
 
 export default Details;
-

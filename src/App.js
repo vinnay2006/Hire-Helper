@@ -16,6 +16,7 @@ import HelperDashboard from './components/HelperDashboard';
 import HireHelper from './components/HireHelper';
 import Feedback from './components/Feedback';
 import Details from './components/Details'
+import CallRoom from './components/CallRoom';
 function App() {
   return (
     <>
@@ -36,6 +37,7 @@ function App() {
          <Route path="/HelperDashboard" element={<HelperDashboard />} />
          <Route path="/feedback" element={<Feedback />} />
          <Route path="/details" element={<Details />} />
+         <Route path="/callroom/:roomId" element={<CallRoom />} />
       </Routes>
     </div>
    </HelperState>

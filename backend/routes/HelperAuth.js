@@ -108,4 +108,34 @@ router.get('/getClient',fetchhelper, async(req,res)=>{
     res.status(500).send("Internal Server Error");
    }
   })
+
+  router.put('/updateDetails/:id', fetchhelper, async (req, res) => {
+    const { name, email, mobile_no, location,experience,charges,available } = req.body;
+    const newDetails = {};
+  
+    if (name) newDetails.name = name;
+    if (email) newDetails.email = email;
+    if (location) newDetails.location = location;
+    if (mobile_no) newDetails.mobile_no = mobile_no;
+   if (experience) newDetails.experience = experience;
+    if (charges) newDetails.charges = charges;
+       if (available) newDetails.available = available;
+    let client = await Helper.findById(req.params.id);
+    if (!client) {
+      return res.status(404).send("not found");
+    }
+  
+  
+    if (client.id.toString() !== req.helper.id) {
+      return res.status(401).send("not allowed");
+    }
+  
+    client = await Helper.findByIdAndUpdate(
+      req.params.id,
+      { $set: newDetails },
+      { new: true }
+    );
+    
+    res.json({ client });
+  });
 module.exports=router
