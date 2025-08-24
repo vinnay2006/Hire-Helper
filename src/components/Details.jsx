@@ -1,8 +1,10 @@
 import React, { useContext, useEffect,useState } from 'react';
 import AuthContext from "../context/helpers/AuthContext";
 
+import helperContext from '../context/helpers/HelperContext';
 function Details() {
   const { details, clientDetails } = useContext(AuthContext);
+    const { getHelpers } = useContext(helperContext);
  const initialFormState = localStorage.getItem("type") === "user"
   ? { name: "", email: "", location: "", mobile_no: "" }
   : { name: "", email: "", location: "", mobile_no: "", experience: "", charges: "",available:"" };
@@ -66,7 +68,9 @@ const [formData, setFormData] = useState(initialFormState);
 
       // Refreshing after update
       clientDetails();
+      
       alert("Details updated successfully!");
+      
     } catch (error) {
       console.error(error);
       alert("Error updating details");

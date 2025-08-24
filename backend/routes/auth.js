@@ -189,7 +189,7 @@ router.put('/updateDetails/:id', fetchuser, async (req, res) => {
 });
 
 /* creating a  delete request for api/notes/deletenote
-router.delete('/deletenote/:id', fetchuser, async (req, res) => {
+router.delete('/delete/:id', fetchuser, async (req, res) => {
 
  
   let note = await Notes.findById(req.params.id);

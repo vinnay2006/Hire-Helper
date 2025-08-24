@@ -16,7 +16,7 @@ function Tutor() {
    <div className='Home-container'style={{ display:"flex",justifyContent:"center",alignItems:"center",marginTop:"20px"}}>
   
  <div className="row ">
-  {helpers.filter(helper => helper.category?.toLowerCase() === "tutor").map((helper)=>{
+  {helpers.filter(helper => helper.category?.toLowerCase() === "tutor"&&helper.available==true).map((helper)=>{
   return <div className="card col-md-3 me-5" style={{ width: "20rem" ,textAlign:"left",textSizeAdjust:"3px",}}>
   <img src="" className="card-img-top" alt="..." />
   <div className="card-body">
