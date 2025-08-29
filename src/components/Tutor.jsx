@@ -1,22 +1,24 @@
 import React, { useContext,useEffect } from 'react'
 import HelperContext from "../context/helpers/HelperContext"
-import {useNavigate}from "react-router-dom"
-function Tutor() {
+import {useNavigate,useLocation}from "react-router-dom"
+function Tutor(props) {
   const navigate=useNavigate();
+    const location = useLocation();
+  const { category } = location.state || {};
   const context=useContext(HelperContext);
   const {helpers,getHelpers}=context;
     useEffect(() => {
     getHelpers();
-  }, [getHelpers]);
+  }, []);
   
   return (
 
       <>
-       <div style={{marginTop:"15px"}}><h3><b>CHOOSE CATEGORY FOR HELP</b></h3></div><br/>
+       <div style={{marginTop:"15px"}}><h3><b>{category?.toUpperCase()}</b></h3></div><br/>
    <div className='Home-container'style={{ display:"flex",justifyContent:"center",alignItems:"center",marginTop:"20px"}}>
   
  <div className="row ">
-  {helpers.filter(helper => helper.category?.toLowerCase() === "tutor"&&helper.available==true).map((helper)=>{
+  {helpers.filter(helper => helper.category?.toLowerCase() ===category?.toLowerCase()&&helper.available==true).map((helper)=>{
   return <div className="card col-md-3 me-5" style={{ width: "20rem" ,textAlign:"left",textSizeAdjust:"3px",}}>
   <img src="" className="card-img-top" alt="..." />
   <div className="card-body">

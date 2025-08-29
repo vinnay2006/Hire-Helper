@@ -1,4 +1,10 @@
+//new//
+import { useEffect, useState } from "react";
+import { io } from "socket.io-client";
 
+// connect socket outside component so it doesn't reconnect every render
+
+//end//
 import './App.css';
 import Navbar from './components/Navbar';
 import { Routes, Route } from 'react-router-dom';
@@ -17,13 +23,28 @@ import HireHelper from './components/HireHelper';
 import Feedback from './components/Feedback';
 import Details from './components/Details'
 import CallRoom from './components/CallRoom';
+const socket = io("http://localhost:5000");
 function App() {
+    const [data, setData] = useState(null);
+
+  useEffect(() => {
+    // listen for updates
+    socket.on("dataUpdate", (newData) => {
+      setData(newData);
+    });
+
+    // cleanup
+    return () => {
+      socket.off("dataUpdate");
+    };
+  }, []);
   return (
     <>
     <AuthState>
    <HelperState>
     <div className="App">
   <Navbar />
+   <h2>Live Data: {data ? data.value : "Loading..."}</h2>
    <Routes>
        <Route path="/" element={<Home />} />
        <Route path="/about" element={<About/>} />

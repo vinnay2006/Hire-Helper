@@ -1,6 +1,6 @@
 import React, { useContext, useEffect,useState } from 'react';
 import AuthContext from "../context/helpers/AuthContext";
-
+import {useNavigate} from "react-router-dom"
 import helperContext from '../context/helpers/HelperContext';
 function Details() {
   const { details, clientDetails } = useContext(AuthContext);
@@ -8,7 +8,7 @@ function Details() {
  const initialFormState = localStorage.getItem("type") === "user"
   ? { name: "", email: "", location: "", mobile_no: "" }
   : { name: "", email: "", location: "", mobile_no: "", experience: "", charges: "",available:"" };
-
+ const navigate=useNavigate();
 const [formData, setFormData] = useState(initialFormState);
 
   useEffect(() => {
@@ -39,8 +39,9 @@ const [formData, setFormData] = useState(initialFormState);
   };
 
   useEffect(() => {
-    clientDetails();
-  }, [clientDetails]);
+   clientDetails();
+   
+  }, []);
    const handleUpdate = async (e) => {
     
     try {
@@ -67,10 +68,11 @@ const [formData, setFormData] = useState(initialFormState);
       }
 
       // Refreshing after update
-      clientDetails();
+      await clientDetails();
       
       alert("Details updated successfully!");
-      
+      await  getHelpers();
+      navigate("/tutor", { replace: true });
     } catch (error) {
       console.error(error);
       alert("Error updating details");

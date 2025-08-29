@@ -16,6 +16,7 @@ const getHelpers=async()=>{
       }
    });
 const json=await response.json()
+  console.log("Fetched helpers from backend:", json)
 setHelpers(json)
 }
 const userHistory=async()=>{

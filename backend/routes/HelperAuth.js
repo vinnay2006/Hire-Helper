@@ -1,5 +1,7 @@
 const express=require("express")
 const Helper=require("../models/Helper")
+const User = require("../models/User");
+
 const { body, validationResult } = require('express-validator');
 const router=express.Router();
 const bcrypt=require('bcryptjs')
@@ -91,13 +93,30 @@ if(!passkeycomp){
 
 
 })
- router.get('/gethelpers',fetchuser, async(req,res)=>{
+router.get('/gethelpers', fetchuser, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
 
-   const helpers=await Helper.find({
-   location:req.user.location
-   });
-   res.json(helpers);
-})
+    console.log("Logged in user location:", user.location);
+
+    const helpers = await Helper.find({
+      location: user.location,
+      available: true
+    });
+
+    console.log("Fetched helpers:", helpers);
+
+    res.json(helpers);
+  } catch (error) {
+    console.error("Server error in /gethelpers:", error);
+    res.status(500).json({ error: "Server error", details: error.message }); // 👈 JSON response
+  }
+});
+
+
 router.get('/getClient',fetchhelper, async(req,res)=>{
    try {
     helperId=req.helper.id;

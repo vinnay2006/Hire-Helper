@@ -1,5 +1,6 @@
 import React from 'react'
-
+import Tutor from './Tutor';
+import { Link } from "react-router-dom";
 function Home() {
   return (<> <div style={{marginTop:"15px"}}><h3><b>CHOOSE CATEGORY FOR HELP</b></h3></div><br/>
    <div className='Home-container'style={{ display:"flex",justifyContent:"center",alignItems:"center",marginTop:"20px"}}>
@@ -12,7 +13,13 @@ function Home() {
     <p className="card-text" style={{textAlign:"left"}}>
   
     </p>
-    <a href="/Tutor" className="btn btn-primary">SEE EXPERTS</a>
+      <Link 
+      to="/tutor" 
+      state={{ category: "tutor" }} 
+      className="btn btn-primary"
+    >
+      SEE EXPERTS
+    </Link>
   </div> 
 </div>
 
@@ -23,7 +30,13 @@ function Home() {
     <p className="card-text" style={{textAlign:"left"}}>
   
     </p>
-    <a href="/Carpenter" className="btn btn-primary">SEE EXPERTS</a>
+    <Link 
+      to="/tutor" 
+      state={{ category: "Carpenter" }} 
+      className="btn btn-primary"
+    >
+      SEE EXPERTS
+    </Link>
   </div>
 </div>
   <div className="card col-md-3 me-5" style={{ width: "15rem" }}>
@@ -33,7 +46,13 @@ function Home() {
     <p className="card-text" style={{textAlign:"left"}}>
   
     </p>
-    <a href="/Plumber" className="btn btn-primary">SEE EXPERTS</a>
+     <Link 
+      to="/tutor" 
+      state={{ category: "Plumber" }} 
+      className="btn btn-primary"
+    >
+      SEE EXPERTS
+    </Link>
   </div>
   
   
@@ -45,7 +64,13 @@ function Home() {
     <p className="card-text" style={{textAlign:"left"}}>
   
     </p>
-    <a href="/Chef" className="btn btn-primary">SEE EXPERTS</a>
+    <Link 
+      to="/tutor" 
+      state={{ category: "Chef" }} 
+      className="btn btn-primary"
+    >
+      SEE EXPERTS
+    </Link>
   </div>
   
   

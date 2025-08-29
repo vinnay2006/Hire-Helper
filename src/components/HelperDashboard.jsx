@@ -2,9 +2,17 @@ import React from 'react'
 
 function HelperDashboard() {
   return (
+    <>
     <div>
-      <h4>Helper Dashboard</h4>
+      <h3>Helper Dashboard</h3>
     </div>
+     <div>
+      <h4>see active case</h4>
+    </div>
+    <div>
+      <h4>see closed cases</h4>
+    </div>
+    </>
   )
 }
 
