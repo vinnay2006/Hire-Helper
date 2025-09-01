@@ -51,6 +51,7 @@ console.log(localStorage.getItem('token'))
           mobile_no: helper.mobile_no,
           category: helper.category,
           location: helper.location,
+          charges: helper.charges,
         }),
       });
 

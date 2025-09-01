@@ -15,7 +15,6 @@ const PresentSchema = new mongoose.Schema({
     type: String,
     required: true,
     lowercase: true,
-    
   },
  
   mobile_no: {
@@ -29,6 +28,10 @@ const PresentSchema = new mongoose.Schema({
   location: {
     type: String,
     required: true
+  },
+   charges: {
+    type: String,
+    required: true,
   },
   date:{
     type:Date,

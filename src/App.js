@@ -1,4 +1,5 @@
 //new//
+
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 
@@ -23,19 +24,23 @@ import HireHelper from './components/HireHelper';
 import Feedback from './components/Feedback';
 import Details from './components/Details'
 import CallRoom from './components/CallRoom';
+// import Checkout from './components/Checkout';
 const socket = io("http://localhost:5000");
 function App() {
+
     const [data, setData] = useState(null);
 
   useEffect(() => {
     // listen for updates
     socket.on("dataUpdate", (newData) => {
+         
       setData(newData);
     });
 
     // cleanup
     return () => {
       socket.off("dataUpdate");
+
     };
   }, []);
   return (
@@ -59,6 +64,7 @@ function App() {
          <Route path="/feedback" element={<Feedback />} />
          <Route path="/details" element={<Details />} />
          <Route path="/callroom/:roomId" element={<CallRoom />} />
+         {/* <Route path="/checkout" element={<Checkout/>} /> */}
       </Routes>
     </div>
    </HelperState>

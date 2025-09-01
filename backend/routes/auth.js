@@ -124,9 +124,9 @@ router.get('/UserHistory',fetchuser, async(req,res)=>{
 //realted to active present of user
   router.post('/addActivePresent',fetchuser,async(req,res)=>{
 try {
- const {name,email,mobile_no,category,location} =req.body;
+ const {name,email,mobile_no,charges,category,location} =req.body;
  const present=new Present({
-  name,email,mobile_no,category,location,user:req.user.id
+  name,email,mobile_no,charges,category,location,user:req.user.id
  })
  const savedPresent=await present.save();
  res.json(savedPresent)

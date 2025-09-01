@@ -2,6 +2,73 @@ import React, { useContext,useEffect } from 'react'
 import HelperContext from "../context/helpers/HelperContext"
 import {useNavigate,Link} from "react-router-dom"
 function Dashboard() {
+  const amount=800000;
+  const currency="INR";
+  const receiptId="qwsaq1";
+  const paymentHandler=async (val,e)=>{
+ const response=await fetch("http://localhost:5000/order",{
+  method:"POST",
+  body:JSON.stringify({
+    amount:val,
+    currency,
+    receipt:receiptId,
+
+  }),
+  headers:{
+    "Content-Type":"application/json",
+  },
+ });
+ const order= await response.json();
+ console.log(order);
+  var options = {
+      key: "rzp_test_RC23WgCKYDDbow", // Replace with your Razorpay Key ID
+      amount:val, // Amount in paise (50000 = INR 500)
+      currency,
+      name: "My Store",
+      description: "Test Transaction",
+      image: "https://example.com/your_logo",
+      order_id: order.id, // Replace with order_id from backend
+      handler: async function (response) {
+   const body={
+    ...response,
+   };
+const validateRes=await fetch("http://localhost:5000/order/validate",{
+  method:"POST",
+  body:JSON.stringify(body),
+  headers:{
+    "Content-Type":"application/json",
+  },
+
+}
+);
+const jsonRes=await validateRes.json();
+console.log(jsonRes);
+      },
+      prefill: {
+        name: "John Doe",
+        email: "john.doe@example.com",
+        contact: "9999999999",
+      },
+      notes: {
+        address: "Demo Corporate Office",
+      },
+      theme: {
+        color: "#3399cc",
+      },
+    };
+    var rzp1=new window.Razorpay(options);
+    rzp1.on('payment.failed',function(response){
+      alert(response.error.code);
+         alert(response.error.description);
+            alert(response.error.source);
+               alert(response.error.step);
+                  alert(response.error.reason);
+                     alert(response.error.metadata.order_id);
+                        alert(response.error.metadata.payment_id);
+    });
+    rzp1.open();
+    e.preventDefault();
+  }
   const handleCall=()=>{
  
     const roomId= prompt("enter the room no to start a video call with the helper");
@@ -54,6 +121,7 @@ function Dashboard() {
     <h6 className="card-title">Name :{presenties.name}</h6><br/>
     <h6 className="card-title">Category :{presenties.category}</h6><br/>
     <h6 className="card-title">Location :{presenties.location}</h6><br/>
+     <h6 className="card-title">charges :{presenties.charges}</h6><br/>
     <h6 className="card-title">Date :{presenties.date}</h6>
     <p className="card-text" style={{textAlign:"left"}}>
       <button className='btn btn-primary mx-1 ' onClick={async (e) => {
@@ -94,7 +162,7 @@ function Dashboard() {
   }
   }} > Active</button>
          <button className='btn btn-primary mx-1 ' onClick={handleCall}> CALL</button>
-          <button className='btn btn-primary mx-1 ' > PAY</button>
+          <button className='btn btn-primary mx-1 '   onClick={(e) => paymentHandler(presenties.charges, e)} >Pay</button>
   
     </p>
    
