@@ -36,9 +36,9 @@ const handleSubmit = async (e) => {
       const data = await response.json();
 
       if (response.ok) {
-      localStorage.setItem("token",data.authtoken);
+      sessionStorage.setItem("token",data.authtoken);
       setToken(data.authtoken)
-         localStorage.setItem("type","user");
+         sessionStorage.setItem("type","user");
          setLoginType("user")
         navigate("/")
         console.log(data);
@@ -63,10 +63,10 @@ const handleSubmit = async (e) => {
       const data = await response.json();
 
       if (response.ok) {
-          localStorage.setItem("token",data.authtoken);
+          sessionStorage.setItem("token",data.authtoken);
           
       setToken(data.authtoken)
-       localStorage.setItem("type","helper");
+       sessionStorage.setItem("type","helper");
         setLoginType("helper")
         navigate("/")
         console.log(data);

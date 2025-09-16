@@ -8,6 +8,7 @@ import { io } from "socket.io-client";
 //end//
 import './App.css';
 import Navbar from './components/Navbar';
+import Tracker from './components/Tracker';
 import { Routes, Route } from 'react-router-dom';
 import Login from './components/Login';
 import Signup from './components/Signup';
@@ -29,12 +30,13 @@ const socket = io("http://localhost:5000");
 function App() {
 
     const [data, setData] = useState(null);
-
+function sendDetails(){
+  socket.emit("sendDetails",{name:"vinay",role:"user"});
+}
   useEffect(() => {
     // listen for updates
-    socket.on("dataUpdate", (newData) => {
-         
-      setData(newData);
+    socket.on("detailsReceived", (data) => {
+     console.log("server says ",data);
     });
 
     // cleanup
@@ -49,7 +51,7 @@ function App() {
    <HelperState>
     <div className="App">
   <Navbar />
-   <h2>Live Data: {data ? data.value : "Loading..."}</h2>
+   
    <Routes>
        <Route path="/" element={<Home />} />
        <Route path="/about" element={<About/>} />
@@ -63,6 +65,7 @@ function App() {
          <Route path="/HelperDashboard" element={<HelperDashboard />} />
          <Route path="/feedback" element={<Feedback />} />
          <Route path="/details" element={<Details />} />
+          <Route path="/tracker" element={<Tracker/>} />
          <Route path="/callroom/:roomId" element={<CallRoom />} />
          {/* <Route path="/checkout" element={<Checkout/>} /> */}
       </Routes>

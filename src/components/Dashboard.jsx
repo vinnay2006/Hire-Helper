@@ -90,7 +90,7 @@ console.log(jsonRes);
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          'auth-token':  localStorage.getItem('token'),
+          'auth-token':  sessionStorage.getItem('token'),
         },
       
       });
@@ -111,12 +111,13 @@ console.log(jsonRes);
   return (
 
       <>
-      <div style={{marginTop:"15px"}}><h3><b>SEE YOUR  ACTIVE HELPERS</b></h3></div><br/>
+      <div style={{marginTop:"15px"}}><h3 style={{ fontFamily: "Montserrat, sans-serif" }}><b>SEE YOUR  ACTIVE HELPERS</b></h3></div><br/>
    <div className='Home-container'style={{ display:"flex",justifyContent:"center",alignItems:"center",marginTop:"20px"}}>
   
  <div className="row ">
   {present.map((presenties)=>{
   return <div className="card col-md-3 me-5" style={{ width: "20rem",textAlign :"left"}}>
+      <img src="https://thumbs.dreamstime.com/b/happy-person-portrait-smiling-woman-tanned-skin-curly-hair-happy-person-portrait-smiling-young-friendly-woman-197501184.jpg" className="card-img-top" alt="..." />
   <div className="card-body">
     <h6 className="card-title">Name :{presenties.name}</h6><br/>
     <h6 className="card-title">Category :{presenties.category}</h6><br/>
@@ -129,13 +130,13 @@ console.log(jsonRes);
    if(userwill==="yes")
    {
     e.preventDefault();
-     console.log(localStorage.getItem('token'))
+     console.log(sessionStorage.getItem('token'))
     try {
       const response = await fetch("http://localhost:5000/api/auth/addhistory", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'auth-token':  localStorage.getItem('token'),
+          'auth-token':  sessionStorage.getItem('token'),
         },
         body: JSON.stringify({
           name: presenties.name,
@@ -163,7 +164,8 @@ console.log(jsonRes);
   }} > Active</button>
          <button className='btn btn-primary mx-1 ' onClick={handleCall}> CALL</button>
           <button className='btn btn-primary mx-1 '   onClick={(e) => paymentHandler(presenties.charges, e)} >Pay</button>
-  
+  <Link to="/tracker"> map</Link>
+{/* <i class="fas fa-map-marker-alt" ></i> */}
     </p>
    
 
@@ -178,12 +180,13 @@ console.log(jsonRes);
 
 
 
-       <div style={{marginTop:"15px"}}><h3><b>SEE YOUR  PAST HELPERS</b></h3></div><br/>
+       <div style={{marginTop:"15px"}}><h3 style={{ fontFamily: "Montserrat, sans-serif" }}><b>SEE YOUR  PAST HELPERS</b></h3></div><br/>
    <div className='Home-container'style={{ display:"flex",justifyContent:"center",alignItems:"center",marginTop:"20px"}}>
   
  <div className="row ">
   {history.map((historian)=>{
   return <div className="card col-md-3 me-5" style={{ width: "20rem",textAlign :"left"}}>
+      <img src="https://thumbs.dreamstime.com/b/happy-person-portrait-smiling-woman-tanned-skin-curly-hair-happy-person-portrait-smiling-young-friendly-woman-197501184.jpg" className="card-img-top" alt="..." />
   <div className="card-body">
     <h6 className="card-title">Name :{historian.name}</h6><br/>
     <h6 className="card-title">Category :{historian.category}</h6><br/>

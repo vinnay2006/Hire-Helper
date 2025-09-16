@@ -4,6 +4,7 @@ require("dotenv").config();
 const connectToMongo = require('./db');
 const express = require('express');
 const cors = require('cors');
+const crypto=require("crypto");
 const Razorpay=require("razorpay");
 
 
@@ -37,6 +38,20 @@ app.post('/order',async (req,res)=>{
 
 
 });
+app.post("/order/validate",async(req,res)=>{
+const {razorpay_order_id,razorpay_payment_id,razorpay_signature}=req.body;
+const sha=crypto.createHmac("sha256",process.env.RAZORPAY_SECRET);
+sha.update(`${razorpay_order_id}|${razorpay_payment_id}`);
+const digest=sha.digest("hex");
+if(digest!==razorpay_signature){
+  return res.status(400).json({msg:"transaction is not legit!"});
+}
+res.json({
+  msg:"success",
+  orderId:razorpay_order_id,
+  paymentiId:razorpay_payment_id,
+})
+})
 // Routes
 app.get('/', (req, res) => {
   res.send('Hello World! Vinay is on fire');
@@ -62,15 +77,19 @@ let data = { value: "Initial Data" };
   }, 1000);
 // Socket.IO logic
 io.on("connection", (socket) => {
-  console.log("Client connected");
+  console.log("Client connected",socket.id);
 
   // Send current data immediately
-  socket.emit("dataUpdate", data);
+  socket.on("sendDetails", (data)=>{
+    console.log("Received details:",data);
+ 
+    socket.emit("detailsReceived",{message:"got your data!"});
+  });
 
  
 
   socket.on("disconnect", () => {
-    console.log("Client disconnected");
+    console.log("Client disconnected",socket.id);
   });
 });
 

@@ -1,7 +1,7 @@
 const express=require("express")
 const Helper=require("../models/Helper")
 const User = require("../models/User");
-
+const Present = require("../models/Present");
 const { body, validationResult } = require('express-validator');
 const router=express.Router();
 const bcrypt=require('bcryptjs')
@@ -126,6 +126,10 @@ router.get('/getClient',fetchhelper, async(req,res)=>{
     console.error(error.message);
     res.status(500).send("Internal Server Error");
    }
+  })
+   router.get('/HelperPresent',fetchhelper, async(req,res)=>{
+ const present=await Present.find({helper:req.helper.id}).populate("user", "name email mobile_no location"); 
+ res.json(present)
   })
 
   router.put('/updateDetails/:id', fetchhelper, async (req, res) => {

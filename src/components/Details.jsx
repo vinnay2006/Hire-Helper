@@ -5,21 +5,21 @@ import helperContext from '../context/helpers/HelperContext';
 function Details() {
   const { details, clientDetails } = useContext(AuthContext);
     const { getHelpers } = useContext(helperContext);
- const initialFormState = localStorage.getItem("type") === "user"
+ const initialFormState = sessionStorage.getItem("type") === "user"
   ? { name: "", email: "", location: "", mobile_no: "" }
   : { name: "", email: "", location: "", mobile_no: "", experience: "", charges: "",available:"" };
  const navigate=useNavigate();
 const [formData, setFormData] = useState(initialFormState);
 
   useEffect(() => {
-    if (localStorage.getItem("type")==="user"&&details && formData.name === "") {
+    if (sessionStorage.getItem("type")==="user"&&details && formData.name === "") {
       setFormData({
         name: details.name || '',
         mobile_no: details.mobile_no || '',
         location: details.location || '',
         email: details.email || ''
       });
-    }else if(localStorage.getItem("type")==="helper"&&details && formData.name === ""){
+    }else if(sessionStorage.getItem("type")==="helper"&&details && formData.name === ""){
       setFormData({
         name: details.name || '',
         mobile_no: details.mobile_no || '',
@@ -47,17 +47,17 @@ const [formData, setFormData] = useState(initialFormState);
     try {
       e.preventDefault();
       let endpoint=null;
-      if(localStorage.getItem("type")==="user"){
+      if(sessionStorage.getItem("type")==="user"){
          endpoint="auth";
       }
-      else if(localStorage.getItem("type")==="helper"){
+      else if(sessionStorage.getItem("type")==="helper"){
           endpoint="HelperAuth";
       }
       const res = await fetch(`http://localhost:5000/api/${endpoint}/updateDetails/${details._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          "auth-token": localStorage.getItem("token")
+          "auth-token": sessionStorage.getItem("token")
         },
         body: JSON.stringify(formData)
       });
@@ -98,7 +98,7 @@ const [formData, setFormData] = useState(initialFormState);
         <div className="row">
           <div className="card col-md-3 me-5" style={{ width: "20rem", textAlign: "left" }}>
             <div className="card-body"> 
-              {localStorage.getItem("type") === "user" ? (
+              {sessionStorage.getItem("type") === "user" ? (
   <>
     <h6 className="card-title">Name: {details.name}</h6><br />
     <h6 className="card-title">Email: {details.email}</h6><br />
@@ -151,7 +151,7 @@ const [formData, setFormData] = useState(initialFormState);
             </div>
             <div className="modal-body">
               <form >
-                {localStorage.getItem("type")==="user"?(<>
+                {sessionStorage.getItem("type")==="user"?(<>
                <input type="text" name="name" className="form-control mb-2" onChange={handleChange}  value={formData.name}/>
               <input type="email"  name ="email" className="form-control mb-2"  onChange={handleChange}  value={formData.email}/> 
               <input type="text" name ="location" className="form-control mb-2" onChange={handleChange}  value={formData.location}/> 

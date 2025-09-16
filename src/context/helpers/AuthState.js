@@ -1,24 +1,24 @@
  import { useState } from "react";
 import AuthContext from "./AuthContext";
  const AuthState=(props)=>{
-const [token,setToken]=useState(() => localStorage.getItem("token"));
-const[loginType,setLoginType]=useState(()=>localStorage.getItem("type"));
+const [token,setToken]=useState(() => sessionStorage.getItem("token"));
+const[loginType,setLoginType]=useState(()=>sessionStorage.getItem("type"));
 const [details,setDetails]=useState();
 const clientDetails=async()=>{
-if(localStorage.getItem("type")==="user"){
+if(sessionStorage.getItem("type")==="user"){
    const response=await fetch("http://localhost:5000/api/auth/getClient",{
       method:"GET",
       headers:{
-         "auth-token":localStorage.getItem("token")
+         "auth-token":sessionStorage.getItem("token")
       }
    });
 const json=await response.json()
 setDetails(json)}
-else if(localStorage.getItem("type")==="helper"){
+else if(sessionStorage.getItem("type")==="helper"){
       const response=await fetch("http://localhost:5000/api/HelperAuth/getClient",{
       method:"GET",
       headers:{
-         "auth-token":localStorage.getItem("token")
+         "auth-token":sessionStorage.getItem("token")
       }
    });
 const json=await response.json()

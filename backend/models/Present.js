@@ -3,7 +3,12 @@ const {Schema}=mongoose
 const PresentSchema = new mongoose.Schema({
  user:{
   type: mongoose.Schema.Types.ObjectId, 
- ref:"user",
+ ref:"User",
+  unique:true,
+ },
+  helper:{
+  type: mongoose.Schema.Types.ObjectId, 
+ ref:"Helper",
   unique:true,
  },
   name: {

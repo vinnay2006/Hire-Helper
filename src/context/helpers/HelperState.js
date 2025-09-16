@@ -4,15 +4,17 @@ import HelperContext from "./HelperContext";
    const helpersInitial=[]
    const historyInitial=[]
    const presentInitial=[]
+   const HelperpresentInitial=[]
 const [helpers,setHelpers]=useState(helpersInitial)
 const [history,setHistory]=useState(historyInitial)
 const [present,setPresent]=useState(presentInitial)
+const [Helperpresent,setHelperpresent]=useState(HelperpresentInitial)
 const getHelpers=async()=>{
    const response=await fetch("http://localhost:5000/api/HelperAuth/gethelpers",{
       method:"GET",
       headers:{
          "Content-Type":"application/json",
-         "auth-token":localStorage.getItem("token")
+         "auth-token":sessionStorage.getItem("token")
       }
    });
 const json=await response.json()
@@ -24,7 +26,7 @@ const userHistory=async()=>{
       method:"GET",
       headers:{
          "Content-Type":"application/json",
-         "auth-token":localStorage.getItem("token")
+         "auth-token":sessionStorage.getItem("token")
       }
    });
 const json=await response.json()
@@ -35,15 +37,26 @@ const userPresent=async()=>{
       method:"GET",
       headers:{
          "Content-Type":"application/json",
-         "auth-token":localStorage.getItem("token")
+         "auth-token":sessionStorage.getItem("token")
       }
    });
 const json=await response.json()
 setPresent(json)
 }
+const HelperPresent=async()=>{
+   const response=await fetch("http://localhost:5000/api/HelperAuth/HelperPresent",{
+      method:"GET",
+      headers:{
+         "Content-Type":"application/json",
+         "auth-token":sessionStorage.getItem("token")
+      }
+   });
+const json=await response.json()
+setHelperpresent(json)
+}
  return(
  
-    <HelperContext.Provider value={{helpers,setHelpers,getHelpers,history,setHistory,userHistory,present,setPresent,userPresent}}>
+    <HelperContext.Provider value={{helpers,setHelpers,getHelpers,history,setHistory,userHistory,present,setPresent,userPresent,HelperPresent,Helperpresent,setHelperpresent}}>
         {props.children}
     </HelperContext.Provider>
  )
