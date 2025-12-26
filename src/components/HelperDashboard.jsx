@@ -1,11 +1,20 @@
 import React, { useContext,useEffect } from 'react'
 import HelperContext from "../context/helpers/HelperContext"
+import {useNavigate} from "react-router-dom"
 function HelperDashboard() {
   const context=useContext(HelperContext);
    const {Helperpresent,setHelperpresent,HelperPresent}=context;
     useEffect(() => {
  HelperPresent();
-  }, []);
+  }, []); const handleCall=()=>{
+   
+      const roomId= prompt("enter the room no to start a video call with the helper");
+      console.log(roomId);
+      if(roomId){
+        navigate(`/callroom/${roomId}`);
+      }
+    }
+    const navigate=useNavigate();
   return (
     <>
     <div>
@@ -24,7 +33,7 @@ function HelperDashboard() {
     <h6 className="card-title">Location :{presenties.user?.mobile_no}</h6><br/>
      <h6 className="card-title">charges :{presenties.user?.location}</h6><br/>
     <h6 className="card-title">Date :{presenties.date}</h6>
-  <button className="btn btn-primary">enter_room</button>
+  <button className='btn btn-primary mx-1 ' onClick={handleCall}> CALL</button>
 
   </div> 
 </div>

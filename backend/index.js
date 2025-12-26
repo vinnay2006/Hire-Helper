@@ -1,6 +1,8 @@
 require("dotenv").config();
 
 
+
+
 const connectToMongo = require('./db');
 const express = require('express');
 const cors = require('cors');
@@ -56,8 +58,16 @@ res.json({
 app.get('/', (req, res) => {
   res.send('Hello World! Vinay is on fire');
 });
+
+
+
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/HelperAuth', require('./routes/HelperAuth'));
+
+
+
+
+
 
 // Create HTTP server from express app
 const http = require("http");
