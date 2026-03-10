@@ -36,6 +36,7 @@ Helpers receive instant updates when they are hired and can manage their work th
 - Git
 - GitHub
 - Postman (API Testing)
+- 
   
   ## ✨ Features
 
@@ -48,3 +49,23 @@ Helpers receive instant updates when they are hired and can manage their work th
 - Secure online payments using Razorpay Payment Gateway
 - RESTful API integration
 - Responsive and user-friendly UI
+## Folder Structure
+Hire-Helper/
+├── backend/                # Enterprise-ready Node.js server logic
+│   ├── middleware/         # Security & Auth validation filters
+│   ├── models/             # Schema definitions (User, Helper, History, Present)
+│   ├── routes/             # Versioned REST API endpoints
+│   ├── zegoToken.js        # Server-side signaling for WebRTC
+│   └── db.js               # Database connection abstraction
+├── src/                    # Frontend React Architecture
+│   ├── components/         # Modular UI views and pages
+│   ├── context/            # Global state providers (Auth & Helper states)
+│   └── App.js              # Centralized routing logic
+└── public/                 # Static asset management
+
+##Screenshots
+<img width="1072" height="534" alt="image" src="https://github.com/user-attachments/assets/1c9b6dd6-b321-42a4-b5d2-7ff520cdb7c3" />
+<img width="1080" height="438" alt="image" src="https://github.com/user-attachments/assets/b8047511-e252-4e36-be18-f6c19268245d" />
+<img width="1080" height="556" alt="image" src="https://github.com/user-attachments/assets/3b60288a-7f3f-4c05-a20e-f77fa96b7aef" />
+<img width="1053" height="484" alt="image" src="https://github.com/user-attachments/assets/1e2c738a-eb53-4677-89c9-049a4604d07f" />
+
