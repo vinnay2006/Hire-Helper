@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { io } from "socket.io-client";
 
 import './App.css';
@@ -24,18 +24,16 @@ import CallRoom from './components/CallRoom';
 const socket = io("http://localhost:5000");
 
 function App() {
-  const [data, setData] = useState(null);
 
   useEffect(() => {
-    const handleSocketData = (incomingData) => {
-      console.log("server says", incomingData);
-      setData(incomingData);
+    const handleSocket = (data) => {
+      console.log("server says", data);
     };
 
-    socket.on("detailsReceived", handleSocketData);
+    socket.on("detailsReceived", handleSocket);
 
     return () => {
-      socket.off("detailsReceived", handleSocketData);
+      socket.off("detailsReceived", handleSocket);
     };
   }, []);
 
@@ -44,6 +42,7 @@ function App() {
       <AuthState>
         <HelperState>
           <div className="App">
+
             <Navbar />
 
             <Routes>
@@ -62,6 +61,7 @@ function App() {
               <Route path="/tracker" element={<Tracker />} />
               <Route path="/callroom/:roomId" element={<CallRoom />} />
             </Routes>
+
           </div>
         </HelperState>
       </AuthState>
