@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const mongoURI = "mongodb://localhost:27017/Helper";
+const mongoURI = process.env.mongo_URI;
 
 const connectToMongo = () => {
     mongoose.connect(mongoURI, {

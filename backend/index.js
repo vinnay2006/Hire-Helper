@@ -12,7 +12,7 @@ const Razorpay=require("razorpay");
 
 
 const app = express();
-const port = 5000;
+const port = process.env.port;
 
 // for  middlewares
 app.use(cors());
