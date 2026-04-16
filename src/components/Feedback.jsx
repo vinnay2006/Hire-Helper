@@ -3,7 +3,7 @@ import React from 'react'
 function Feedback() {
   return (
     <>
-    
+    //it will be implemented in coming stage where the feedbacks will be saved and will be displayed as a rating score for helpers 
     <div className="container" style={{ display:"flex",justifyContent:"center",alignItems:"center",textAlign: "left"}}>
     <div className="SignUpForm" >
       <h3>Give your Genuine Feedback!!</h3>

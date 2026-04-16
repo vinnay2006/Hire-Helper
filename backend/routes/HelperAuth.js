@@ -9,7 +9,7 @@ var jwt=require("jsonwebtoken")
 var fetchuser=require('../middleware/fetchuser')
 var fetchhelper=require('../middleware/fetchhelper')
 const JWT_SECRET="vinayisagooddebator"
-//creating a new user using new request that hits end point /api/auth/createuser
+//creating a new helper  using new request that hits end point /api/auth/createuser
 router.post('/createuser',  [
     body('name')
       .notEmpty().withMessage('Name is required')
@@ -51,7 +51,7 @@ router.post('/createuser',  [
  }
  
 })
-//creating  a user with  an endpoint /api/auth/login
+//ap helping user login with  an endpoint /api/auth/login
 router.post('/login',  [
     body('email')
       .isEmail().withMessage('Invalid email'),

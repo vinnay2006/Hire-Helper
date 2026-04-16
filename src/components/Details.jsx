@@ -67,7 +67,7 @@ const [formData, setFormData] = useState(initialFormState);
       throw new Error(`Failed to update details: ${errorText}`);
       }
 
-      // Refreshing after update
+      // it will help in Refreshing after update in thew details
       await clientDetails();
       
       alert("Details updated successfully!");
@@ -130,7 +130,7 @@ const [formData, setFormData] = useState(initialFormState);
         </div>
       </div>
 
-      {/* Modal JSX - always mounted */}
+
       <div
         className="modal fade"
         id="exampleModal"

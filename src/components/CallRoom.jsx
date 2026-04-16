@@ -1,30 +1,30 @@
-// src/CallRoom.jsx
+
 import React, { useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 
 export default function CallRoom() {
-  const { roomId } = useParams();          // expects route like /room/:roomId
+  const { roomId } = useParams();          
   const containerRef = useRef(null);
 
   useEffect(() => {
     if (!containerRef.current) return;
 
-    // Zego SDK is loaded via <script> in index.html
+    // Zego SDK is loaded via <script> in index.html that  has been already been used
     const { ZegoUIKitPrebuilt } = window;
     if (!ZegoUIKitPrebuilt) {
       console.error("ZEGO SDK not loaded");
       return;
     }
 
-    // TODO: replace with your actual values from ZEGOCLOUD console
-    const appID = 192152014; // number, e.g. 1234567890
+   
+    const appID = 192152014; 
     const serverSecret = "763664184756bec169955522c734c64f";
 
     const finalRoomId = roomId || "1234"; // fallback room ID
     const userID = "user_" + Date.now();
     const userName = "Guest_" + Math.floor(Math.random() * 10000);
 
-    // Generate test kit token
+    // this code will Generate test kit token
     const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
       appID,
       serverSecret,
@@ -36,7 +36,7 @@ export default function CallRoom() {
     // Create Zego instance
     const zp = ZegoUIKitPrebuilt.create(kitToken);
 
-    // Join room
+    // code for Joining room
     zp.joinRoom({
       container: containerRef.current,
       scenario: {

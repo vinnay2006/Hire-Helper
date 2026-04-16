@@ -10,11 +10,11 @@ const crypto=require("crypto");
 const Razorpay=require("razorpay");
 
 
-// Initialize express
+
 const app = express();
 const port = 5000;
 
-// Middlewares
+// for  middlewares
 app.use(cors());
 app.use(express.urlencoded({extended:false}));
 app.use(express.json());
@@ -54,7 +54,7 @@ res.json({
   paymentiId:razorpay_payment_id,
 })
 })
-// Routes
+
 app.get('/', (req, res) => {
   res.send('Hello World! Vinay is on fire');
 });
@@ -69,27 +69,27 @@ app.use('/api/HelperAuth', require('./routes/HelperAuth'));
 
 
 
-// Create HTTP server from express app
+// making HTTP server from express app
 const http = require("http");
 const server = http.createServer(app);
 
-// Initialize Socket.IO on the same server
+// Initialize Socket.IO on the same server--->will  be implemented in coming stage 
 const { Server } = require("socket.io");
 const io = new Server(server, { cors: { origin: "*" } });
 
-// Example data
+
 let data = { value: "Initial Data" };
 
- // Example: simulate data change every 1s
+ // Example:  data changes here automatically after every 1s
   setInterval(() => {
      data.value = "Updated at " + new Date().toLocaleTimeString();
     io.emit("dataUpdate", data);  
   }, 1000);
-// Socket.IO logic
+//logic
 io.on("connection", (socket) => {
   console.log("Client connected",socket.id);
 
-  // Send current data immediately
+  // getting current data
   socket.on("sendDetails", (data)=>{
     console.log("Received details:",data);
  
@@ -103,7 +103,7 @@ io.on("connection", (socket) => {
   });
 });
 
-// Start the combined server
+// Starting the combined server
 server.listen(port, () => {
   console.log(`Server (Express + Socket.IO) running on port ${port}`);
   connectToMongo();

@@ -1,3 +1,4 @@
+//it has to be implemented where we will be using helpers geospatial coordinates so that their live location can be tracked
 import React, { useEffect, useRef } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";

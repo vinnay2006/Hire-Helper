@@ -22,12 +22,12 @@ function Dashboard() {
  console.log(order);
   var options = {
       key: "rzp_test_RC23WgCKYDDbow", // Replace with your Razorpay Key ID
-      amount:val, // Amount in paise (50000 = INR 500)
+      amount:val, //amount is in paise 
       currency,
       name: "My Store",
       description: "Test Transaction",
       image: "https://example.com/your_logo",
-      order_id: order.id, // Replace with order_id from backend
+      order_id: order.id, //it will be Replaced with order_id from backend
       handler: async function (response) {
    const body={
     ...response,

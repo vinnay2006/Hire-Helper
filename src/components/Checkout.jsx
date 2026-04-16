@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 
 function Checkout() {
   useEffect(() => {
-    // Load Razorpay script dynamically
+ 
     const script = document.createElement("script");
     script.src = "https://checkout.razorpay.com/v1/checkout.js";
     script.async = true;
@@ -11,13 +11,13 @@ function Checkout() {
 
   const handlePayment = () => {
     const options = {
-      key: "rzp_test_RC23WgCKYDDbow", // Replace with your Razorpay Key ID
+      key: "rzp_test_RC23WgCKYDDbow", //my  Razorpay Key ID
       amount: "50000", // Amount in paise (50000 = INR 500)
       currency: "INR",
       name: "My Store",
       description: "Test Transaction",
       image: "https://example.com/your_logo",
-      order_id: "order_RC25Ql1KeOeHrG", // Replace with order_id from backend
+      order_id: "order_RC25Ql1KeOeHrG", //it will be  Replaced with order_id from backend
       handler: function (response) {
         alert("Payment ID: " + response.razorpay_payment_id);
         alert("Order ID: " + response.razorpay_order_id);

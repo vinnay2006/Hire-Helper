@@ -9,7 +9,7 @@ var jwt=require("jsonwebtoken")
 var fetchuser=require('../middleware/fetchuser');
 const { UNSAFE_createBrowserHistory } = require("react-router-dom");
 const JWT_SECRET="vinayisagooddebator"
-//creating a new user using new request that hits end point /api/auth/createuser
+//creating a new user , using new request that hits end point /api/auth/createuser
 router.post('/createuser',  [
     body('name')
       .notEmpty().withMessage('Name is required')
@@ -51,7 +51,7 @@ router.post('/createuser',  [
  }
  
 })
-//creating  a user with  an endpoint /api/auth/login
+//logging   a user with  an endpoint /api/auth/login
 router.post('/login',  [
     body('email')
       .isEmail().withMessage('Invalid email'),
@@ -104,7 +104,7 @@ router.get('/getClient',fetchuser, async(req,res)=>{
     res.status(500).send("Internal Server Error");
    }
   })
-  //RELATED TO USER HISTORY TO SHOW IN ITS PERSONAL DASHBOARD
+  //related to history of user 
   router.post('/addhistory',fetchuser,async(req,res)=>{
 try {
  const {name,email,mobile_no,category,location} =req.body;
@@ -121,7 +121,7 @@ router.get('/UserHistory',fetchuser, async(req,res)=>{
  const history=await History.find({user:req.user.id});
  res.json(history)
   })
-//realted to active present of user
+//realted to active helpers for a particular user
   router.post('/addActivePresent',fetchuser,async(req,res)=>{
 try {
  const {helper,name,email,mobile_no,charges,category,location} =req.body;
@@ -139,7 +139,7 @@ try {
  const present=await Present.find({user:req.user.id});
  res.json(present)
   })
- // DELETE /api/auth/deleteActiveUser/:id
+ // delete is for ending the service of helper  /api/auth/deleteActiveUser/:id
 router.delete('/deleteActiveUser/:id', fetchuser, async (req, res) => {
   try {
     // Find the document with matching ID and owned by this user
@@ -158,7 +158,7 @@ if (!present) {
     res.status(500).json({ success: false, message: "Server error" });
   }
 });
-
+//updating the detaisl of user
 router.put('/updateDetails/:id', fetchuser, async (req, res) => {
   const { name, email, mobile_no, location } = req.body;
   const newDetails = {};
@@ -187,18 +187,6 @@ router.put('/updateDetails/:id', fetchuser, async (req, res) => {
   res.json({ client });
 });
 
-/* creating a  delete request for api/notes/deletenote
-router.delete('/delete/:id', fetchuser, async (req, res) => {
 
- 
-  let note = await Notes.findById(req.params.id);
-  if(!note){return res.status(404).send("not found")}
-  if(note.user.toString()!==req.user.id){
-    return res.status(401).send("not allowed")
-  }
-  note=await Notes.findByIdAndDelete(req.params.id);
-  res.json({"success":"Note has been deleted",note:note});
-});
-*/
 
 module.exports=router

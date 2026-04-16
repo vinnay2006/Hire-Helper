@@ -3,10 +3,10 @@ import React from "react";
 const About = () => {
   return (
     <div className="bg-light text-dark d-flex flex-column min-vh-100">
-      {/* Main Content */}
+      {/* Main Content for my proj */}
       <div className="container py-5 flex-grow-1">
         
-        {/* Header Section */}
+        {/* Header Section of my proj */}
         <div className="text-center mb-5">
           <h1 className="fw-bold">
             About <span className="text-primary">Helper Finder</span>
@@ -16,10 +16,10 @@ const About = () => {
           </p>
         </div>
 
-        {/* Cards Section */}
+        {/* Cards Section to be shown */}
         <div className="row g-4">
           
-          {/* Mission Card */}
+          {/* Mission Card for the proj */}
           <div className="col-md-6">
             <div className="card bg-black border-primary text-light shadow-lg h-100">
               <div className="card-body text-center">
@@ -32,7 +32,7 @@ const About = () => {
             </div>
           </div>
 
-          {/* Technologies Card */}
+          {/* Technologies Card that has been used as the main tech stack */}
           <div className="col-md-6">
             <div className="card bg-black border-success text-light shadow-lg h-100">
               <div className="card-body text-center">
@@ -48,7 +48,7 @@ const About = () => {
         </div>
       </div>
 
-      {/* Footer */}
+      {/* Footer  details*/}
     <footer className="bg-black text-white py-4 mt-auto">
   <div className="container d-flex flex-column flex-md-row justify-content-between align-items-center">
     <div className="mb-3 mb-md-0 text-center text-md-start">

@@ -35,12 +35,12 @@ function sendDetails(){
   socket.emit("sendDetails",{name:"vinay",role:"user"});
 }
   useEffect(() => {
-    // listen for updates
+    // listening  for the  updates
     socket.on("detailsReceived", (data) => {
      console.log("server says ",data);
     });
 
-    // cleanup
+    // cleaning up thesocket connections 
     return () => {
       socket.off("dataUpdate");
 
