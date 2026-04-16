@@ -5,6 +5,7 @@ import React, { useContext,useEffect } from 'react'
 import HelperContext from "../context/helpers/HelperContext"
 import {useNavigate,useLocation}from "react-router-dom"
 function Tutor(props) {
+  console.log(props)
   const navigate=useNavigate();
     const location = useLocation();
   const { category } = location.state || {};
@@ -29,7 +30,7 @@ function Tutor(props) {
    <div className='Home-container'style={{ display:"flex",justifyContent:"center",alignItems:"center",marginTop:"20px"}}>
   
  <div className="row ">
-  {helpers.filter(helper => helper.category?.toLowerCase() ===category?.toLowerCase()&&helper.available==true).map((helper)=>{
+  {helpers.filter(helper => helper.category?.toLowerCase() ===category?.toLowerCase()&&helper.available===true).map((helper)=>{
   return <div className="card col-md-3 me-5" style={{ width: "20rem" ,textAlign:"left",textSizeAdjust:"3px",}}>
   <img src="https://thumbs.dreamstime.com/b/happy-person-portrait-smiling-woman-tanned-skin-curly-hair-happy-person-portrait-smiling-young-friendly-woman-197501184.jpg" className="card-img-top" alt="..." />
   <div className="card-body">
