@@ -25,7 +25,7 @@ const handleSubmit = async (e) => {
     e.preventDefault();
     if(formData.role==="user"){
     try {
-      const response = await fetch('http://localhost:5000/api/auth/login', {
+      const response = await fetch('https://hire-helper-3.onrender.com/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -52,7 +52,7 @@ const handleSubmit = async (e) => {
   }
   else{
       try {
-      const response = await fetch('http://localhost:5000/api/HelperAuth/login', {
+      const response = await fetch('https://hire-helper-3.onrender.com/api/HelperAuth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

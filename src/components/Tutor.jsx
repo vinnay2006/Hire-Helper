@@ -50,7 +50,7 @@ function Tutor(props) {
     e.preventDefault();
 console.log(sessionStorage.getItem('token'))
     try {
-      const response = await fetch("http://localhost:5000/api/auth/addActivePresent", {
+      const response = await fetch("https://hire-helper-3.onrender.com/api/auth/addActivePresent", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
