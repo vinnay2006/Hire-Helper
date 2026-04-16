@@ -7,7 +7,7 @@ const router=express.Router();
 const bcrypt=require('bcryptjs')
 var jwt=require("jsonwebtoken")
 var fetchuser=require('../middleware/fetchuser');
-const { UNSAFE_createBrowserHistory } = require("react-router-dom");
+
 const JWT_SECRET=process.env.jwt_secret;
 //creating a new user , using new request that hits end point /api/auth/createuser
 router.post('/createuser',  [
