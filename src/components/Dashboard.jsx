@@ -2,7 +2,7 @@ import React, { useContext,useEffect } from 'react'
 import HelperContext from "../context/helpers/HelperContext"
 import {useNavigate,Link} from "react-router-dom"
 function Dashboard() {
-  const amount=800000;
+  
   const currency="INR";
   const receiptId="qwsaq1";
   const paymentHandler=async (val,e)=>{
@@ -83,7 +83,7 @@ console.log(jsonRes);
     useEffect(() => {
     userHistory();
     userPresent();
-  }, []);
+  }, [userHistory, userPresent]);
   const handleDeactivate=async(id)=>{
      try {
       const response = await fetch(`http://localhost:5000/api/auth/deleteActiveUser/${id}`, {

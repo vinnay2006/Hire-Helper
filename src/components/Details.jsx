@@ -30,7 +30,7 @@ const [formData, setFormData] = useState(initialFormState);
         available: details.available || ''
       }); 
     }
-  }, [details]);
+  }, [details,formData.name]);
    const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -41,7 +41,7 @@ const [formData, setFormData] = useState(initialFormState);
   useEffect(() => {
    clientDetails();
    
-  }, []);
+  }, [clientDetails]);
    const handleUpdate = async (e) => {
     
     try {
