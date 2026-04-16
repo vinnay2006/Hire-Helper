@@ -1,5 +1,5 @@
 import React from 'react'
-import Tutor from './Tutor';
+
 import { Link } from "react-router-dom";
 function Home() {
   return (<> <div style={{marginTop:"15px"}}><h3 style= {{marginTop:"0px"}}><b>CHOOSE CATEGORY FOR HELP</b></h3></div><br/>

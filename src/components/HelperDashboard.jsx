@@ -3,10 +3,10 @@ import HelperContext from "../context/helpers/HelperContext"
 import {useNavigate} from "react-router-dom"
 function HelperDashboard() {
   const context=useContext(HelperContext);
-   const {Helperpresent,setHelperpresent,HelperPresent}=context;
+   const {Helperpresent,HelperPresent}=context;
     useEffect(() => {
  HelperPresent();
-  }, []); const handleCall=()=>{
+  }, [HelperPresent]); const handleCall=()=>{
    
       const roomId= prompt("enter the room no to start a video call with the helper");
       console.log(roomId);
