@@ -1,5 +1,4 @@
 import { FaPencilAlt, FaBitcoin, FaHammer } from "react-icons/fa";
-
 import './Tutor.css';
 import React, { useContext,useEffect } from 'react'
 import HelperContext from "../context/helpers/HelperContext"
@@ -13,7 +12,7 @@ function Tutor(props) {
   const {helpers,getHelpers}=context;
     useEffect(() => {
     getHelpers();
-  }, []);
+  }, [getHelpers]);
   
   return (
 
