@@ -1,11 +1,6 @@
-//new//
-
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 
-// connect socket outside component so it doesn't reconnect every render
-
-//end//
 import './App.css';
 import Navbar from './components/Navbar';
 import Tracker from './components/Tracker';
@@ -23,55 +18,53 @@ import About from './components/About';
 import HelperDashboard from './components/HelperDashboard';
 import HireHelper from './components/HireHelper';
 import Feedback from './components/Feedback';
-import Details from './components/Details'
+import Details from './components/Details';
 import CallRoom from './components/CallRoom';
 
-// import Checkout from './components/Checkout';
 const socket = io("http://localhost:5000");
-function App() {
 
-    const [data, setData] = useState(null);
+function App() {
+  const [data, setData] = useState(null);
 
   useEffect(() => {
-    // listening  for the  updates
-    socket.on("detailsReceived", (data) => {
-     console.log("server says ",data);
-      setData(data);
-    });
+    const handleSocketData = (incomingData) => {
+      console.log("server says", incomingData);
+      setData(incomingData);
+    };
 
-    // cleaning up thesocket connections 
+    socket.on("detailsReceived", handleSocketData);
+
     return () => {
-      socket.off("dataUpdate");
-console.log(data);
+      socket.off("detailsReceived", handleSocketData);
     };
   }, []);
+
   return (
     <>
-    <AuthState>
-   <HelperState>
-    <div className="App">
-  <Navbar />
-   
-   <Routes>
-       <Route path="/" element={<Home />} />
-       <Route path="/about" element={<About/>} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/tutor" element={<Tutor />} />
-        <Route path="/UserSignup" element={< UserSignup/>} />
-         <Route path="/HelperSignup" element={< HelperSignup/>} />
-         <Route path="/dashboard" element={<Dashboard />} />
-         <Route path="/hire" element={<HireHelper />} />
-         <Route path="/HelperDashboard" element={<HelperDashboard />} />
-         <Route path="/feedback" element={<Feedback />} />
-         <Route path="/details" element={<Details />} />
-          <Route path="/tracker" element={<Tracker/>} />
-         <Route path="/callroom/:roomId" element={<CallRoom />} />
-         {/* <Route path="/checkout" element={<Checkout/>} /> */}
-      </Routes>
-    </div>
-   </HelperState>
-   </AuthState>
+      <AuthState>
+        <HelperState>
+          <div className="App">
+            <Navbar />
+
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/tutor" element={<Tutor />} />
+              <Route path="/UserSignup" element={<UserSignup />} />
+              <Route path="/HelperSignup" element={<HelperSignup />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/hire" element={<HireHelper />} />
+              <Route path="/HelperDashboard" element={<HelperDashboard />} />
+              <Route path="/feedback" element={<Feedback />} />
+              <Route path="/details" element={<Details />} />
+              <Route path="/tracker" element={<Tracker />} />
+              <Route path="/callroom/:roomId" element={<CallRoom />} />
+            </Routes>
+          </div>
+        </HelperState>
+      </AuthState>
     </>
   );
 }
