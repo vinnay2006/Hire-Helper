@@ -36,12 +36,13 @@ function App() {
     // listening  for the  updates
     socket.on("detailsReceived", (data) => {
      console.log("server says ",data);
+      setData(data);
     });
 
     // cleaning up thesocket connections 
     return () => {
       socket.off("dataUpdate");
-
+console.log(data);
     };
   }, []);
   return (
