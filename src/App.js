@@ -21,7 +21,7 @@ import Feedback from './components/Feedback';
 import Details from './components/Details';
 import CallRoom from './components/CallRoom';
 
-const socket = io("http://localhost:5000");
+const socket = io("https://hire-helper-1.onrender.com");
 
 function App() {
 

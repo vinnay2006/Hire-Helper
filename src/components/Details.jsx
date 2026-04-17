@@ -53,7 +53,7 @@ const [formData, setFormData] = useState(initialFormState);
       else if(sessionStorage.getItem("type")==="helper"){
           endpoint="HelperAuth";
       }
-      const res = await fetch(`https://hire-helper-3.onrender.com/api/${endpoint}/updateDetails/${details._id}`, {
+      const res = await fetch(`https://hire-helper-1.onrender.com/api/${endpoint}/updateDetails/${details._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

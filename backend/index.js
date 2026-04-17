@@ -16,6 +16,14 @@ const port = process.env.port;
 
 // for  middlewares
 app.use(cors());
+app.use(cors({
+  origin: [
+    "http://localhost:3000",
+    "https://hire-helper-t5k9.vercel.app/"
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "auth-token"]
+}));
 app.use(express.urlencoded({extended:false}));
 app.use(express.json());
 
