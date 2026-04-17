@@ -18,9 +18,7 @@ const port = process.env.port;
 
 app.use(cors({
   origin: [
-    "http://localhost:3000",
-    "https://hire-helper-t5k9.vercel.app",
-    "https://hire-helper-t5k9-e7nicwe6o-vinay-kumars-projects-24578a9e.vercel.app"
+    "https://hire-helper-t5k9-ik8jqvuo9-vinay-kumars-projects-24578a9e.vercel.app"
   ],
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "auth-token"]
@@ -87,9 +85,7 @@ const { Server } = require("socket.io");
 const io = new Server(server, {
   cors: {
     origin: [
-      "http://localhost:3000",
-      "https://hire-helper-t5k9.vercel.app",
-      "https://hire-helper-t5k9-e7nicwe6o-vinay-kumars-projects-24578a9e.vercel.app"
+      "https://hire-helper-t5k9-ik8jqvuo9-vinay-kumars-projects-24578a9e.vercel.app"
     ],
     methods: ["GET", "POST"]
   }
