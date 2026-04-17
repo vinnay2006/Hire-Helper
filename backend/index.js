@@ -21,7 +21,7 @@ app.use(cors({
     "https://hire-helper-t5k9.vercel.app",
     "https://hire-helper-t5k9-ik8jqvuo9-vinay-kumars-projects-24578a9e.vercel.app"
   ],
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "auth-token"]
 }));
 app.use(express.urlencoded({extended:false}));
