@@ -8,7 +8,7 @@ const bcrypt=require('bcryptjs')
 var jwt=require("jsonwebtoken")
 var fetchuser=require('../middleware/fetchuser')
 var fetchhelper=require('../middleware/fetchhelper')
-const JWT_SECRET="vinayisagooddebator"
+const JWT_SECRET=process.env.jwt_secret;
 //creating a new helper  using new request that hits end point /api/auth/createuser
 router.post('/createuser',  [
     body('name')
