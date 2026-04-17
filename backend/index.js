@@ -83,7 +83,15 @@ const server = http.createServer(app);
 
 // Initialize Socket.IO on the same server--->will  be implemented in coming stage 
 const { Server } = require("socket.io");
-const io = new Server(server, { cors: { origin: "*" } });
+const io = new Server(server, {
+  cors: {
+    origin: [
+      "http://localhost:3000",
+      "https://hire-helper-t5k9.vercel.app"
+    ],
+    methods: ["GET", "POST"]
+  }
+});
 
 
 let data = { value: "Initial Data" };
