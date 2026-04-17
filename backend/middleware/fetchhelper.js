@@ -1,5 +1,5 @@
 var jwt=require('jsonwebtoken');
-const JWT_SECRET="vinayisagooddebator";
+const JWT_SECRET=process.env.jwt_secret;
 const fetchuser=(req,res,next)=>{
 const token=req.header('auth-token');
 if(!token){
