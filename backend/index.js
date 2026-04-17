@@ -24,7 +24,7 @@ app.use(cors({
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "auth-token"]
 }));
-app.options("*", cors());
+
 app.use(express.urlencoded({extended:false}));
 app.use(express.json());
 
