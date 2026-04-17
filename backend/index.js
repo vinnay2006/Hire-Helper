@@ -87,7 +87,8 @@ const io = new Server(server, {
   cors: {
     origin: [
       "http://localhost:3000",
-      "https://hire-helper-t5k9.vercel.app"
+      "https://hire-helper-t5k9.vercel.app",
+      "https://hire-helper-t5k9-e7nicwe6o-vinay-kumars-projects-24578a9e.vercel.app"
     ],
     methods: ["GET", "POST"]
   }
