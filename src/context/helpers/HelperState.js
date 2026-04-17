@@ -10,7 +10,7 @@ const [history,setHistory]=useState(historyInitial)
 const [present,setPresent]=useState(presentInitial)
 const [Helperpresent,setHelperpresent]=useState(HelperpresentInitial)
 const getHelpers=async()=>{
-   const response=await fetch("http://localhost:5000/api/HelperAuth/gethelpers",{
+   const response=await fetch("https://hire-helper-3.onrender.com/api/HelperAuth/gethelpers",{
       method:"GET",
       headers:{
          "Content-Type":"application/json",
@@ -22,7 +22,7 @@ const json=await response.json()
 setHelpers(json)
 }
 const userHistory=async()=>{
-   const response=await fetch("http://localhost:5000/api/auth/userHistory",{
+   const response=await fetch("https://hire-helper-3.onrender.com/api/auth/userHistory",{
       method:"GET",
       headers:{
          "Content-Type":"application/json",
@@ -33,7 +33,7 @@ const json=await response.json()
 setHistory(json)
 }
 const userPresent=async()=>{
-   const response=await fetch("http://localhost:5000/api/auth/userPresent",{
+   const response=await fetch("https://hire-helper-3.onrender.com/api/auth/userPresent",{
       method:"GET",
       headers:{
          "Content-Type":"application/json",
@@ -44,7 +44,7 @@ const json=await response.json()
 setPresent(json)
 }
 const HelperPresent=async()=>{
-   const response=await fetch("http://localhost:5000/api/HelperAuth/HelperPresent",{
+   const response=await fetch("https://hire-helper-3.onrender.com/api/HelperAuth/HelperPresent",{
       method:"GET",
       headers:{
          "Content-Type":"application/json",
