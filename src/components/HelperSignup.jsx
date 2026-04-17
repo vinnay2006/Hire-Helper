@@ -25,7 +25,7 @@ const navigate=useNavigate();
     e.preventDefault();
     
     try {
-      const response = await fetch('https://hire-helper-1.onrender.com/api/HelperAuth/createuser', {
+      const response = await fetch('https://hire-helper-3.onrender.com/api/HelperAuth/createuser', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

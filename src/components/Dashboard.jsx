@@ -6,7 +6,7 @@ function Dashboard() {
   const currency="INR";
   const receiptId="qwsaq1";
   const paymentHandler=async (val,e)=>{
- const response=await fetch("https://hire-helper-1.onrender.com/order",{
+ const response=await fetch("https://hire-helper-3.onrender.com/order",{
   method:"POST",
   body:JSON.stringify({
     amount:val,
@@ -32,7 +32,7 @@ function Dashboard() {
    const body={
     ...response,
    };
-const validateRes=await fetch("https://hire-helper-1.onrender.com/order/validate",{
+const validateRes=await fetch("https://hire-helper-3.onrender.com/order/validate",{
   method:"POST",
   body:JSON.stringify(body),
   headers:{
@@ -86,7 +86,7 @@ console.log(jsonRes);
   }, [userHistory, userPresent]);
   const handleDeactivate=async(id)=>{
      try {
-      const response = await fetch(`https://hire-helper-1.onrender.com/api/auth/deleteActiveUser/${id}`, {
+      const response = await fetch(`https://hire-helper-3.onrender.com/api/auth/deleteActiveUser/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -132,7 +132,7 @@ console.log(jsonRes);
     e.preventDefault();
      console.log(sessionStorage.getItem('token'))
     try {
-      const response = await fetch("https://hire-helper-1.onrender.com/api/auth/addhistory", {
+      const response = await fetch("https://hire-helper-3.onrender.com/api/auth/addhistory", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
