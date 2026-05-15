@@ -1,4 +1,6 @@
 import React, { useContext,useEffect } from 'react'
+import ChatBox from './ChatBox';
+import AuthContext from "../context/helpers/AuthContext";
 import HelperContext from "../context/helpers/HelperContext"
 import {useNavigate,Link} from "react-router-dom"
 function Dashboard() {
@@ -79,6 +81,7 @@ console.log(jsonRes);
   }
   const navigate=useNavigate();
   const context=useContext(HelperContext);
+  const { details } = useContext(AuthContext);
   const {history,userHistory,present,userPresent}=context;
     useEffect(() => {
     userHistory();
@@ -164,6 +167,11 @@ console.log(jsonRes);
   }} > Active</button>
          <button className='btn btn-primary mx-1 ' onClick={handleCall}> CALL</button>
           <button className='btn btn-primary mx-1 '   onClick={(e) => paymentHandler(presenties.charges, e)} >Pay</button>
+          <ChatBox
+  userId={details?._id}
+  helperId={presenties.helper}
+  role="user"
+/>
   <Link to="/tracker"> map</Link>
 {/* <i class="fas fa-map-marker-alt" ></i> */}
     </p>

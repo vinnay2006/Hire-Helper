@@ -13,7 +13,7 @@ const Razorpay=require("razorpay");
 
 const app = express();
 const port = process.env.port;
-
+const Message = require('./models/Message');
 // for  middlewares
 
 app.use(cors({
@@ -67,7 +67,7 @@ res.json({
 app.get('/', (req, res) => {
   res.send('Hello World! Vinay is on fire');
 });
-
+app.use('/api/chat', require('./routes/chat'));
 
 
 app.use('/api/auth', require('./routes/auth'));
@@ -102,21 +102,26 @@ let data = { value: "Initial Data" };
      data.value = "Updated at " + new Date().toLocaleTimeString();
     io.emit("dataUpdate", data);  
   }, 1000);
-//logic
-io.on("connection", (socket) => {
-  console.log("Client connected",socket.id);
 
-  // getting current data
-  socket.on("sendDetails", (data)=>{
-    console.log("Received details:",data);
- 
-    socket.emit("detailsReceived",{message:"got your data!"});
+io.on("connection", (socket) => {
+  console.log("Client connected", socket.id);
+
+  // code is for joing a chat room btw user and helper
+  socket.on("joinRoom", (roomId) => {
+    socket.join(roomId);
+    console.log(Joined room: ${roomId});
   });
 
- 
+  //this is for sending and saving the mesaages
+  socket.on("sendMessage", async (data) => {
+    const { roomId, senderId, senderRole, message } = data;
+    const newMsg = new Message({ roomId, senderId, senderRole, message });
+    await newMsg.save();
+    io.to(roomId).emit("receiveMessage", newMsg);
+  });
 
   socket.on("disconnect", () => {
-    console.log("Client disconnected",socket.id);
+    console.log("Client disconnected", socket.id);
   });
 });
 
