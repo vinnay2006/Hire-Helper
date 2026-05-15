@@ -109,7 +109,7 @@ io.on("connection", (socket) => {
   // code is for joing a chat room btw user and helper
   socket.on("joinRoom", (roomId) => {
     socket.join(roomId);
-    console.log(Joined room: ${roomId});
+    console.log(`Joined room: ${roomId}`);
   });
 
   //this is for sending and saving the mesaages
