@@ -9,7 +9,7 @@ const http = require("http");
 const { Server } = require("socket.io");
 
 const app = express();
-
+const Message = require('./models/Message');
 //for render we are using PORT instead of port
 const port = process.env.PORT || process.env.port || 5000;
 
@@ -65,7 +65,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/HelperAuth', require('./routes/HelperAuth'));
-
+app.use('/api/chat', require('./routes/chat'));
 //  HTTP + Socket.io server
 const server = http.createServer(app);
 
@@ -92,17 +92,25 @@ io.on("connection", (socket) => {
 
   socket.on("joinRoom", (roomId) => {
     socket.join(roomId);
+    console.log("Joined room:", roomId);
   });
 
+
   socket.on("sendMessage", async (data) => {
-    io.to(data.roomId).emit("receiveMessage", data);
+    try {
+      const { roomId, senderId, senderRole, message } = data;
+      const newMsg = new Message({ roomId, senderId, senderRole, message });
+      await newMsg.save();
+      io.to(roomId).emit("receiveMessage", newMsg); // ← sends to both!
+    } catch (err) {
+      console.error("Message save error:", err);
+    }
   });
 
   socket.on("disconnect", () => {
     console.log("Client disconnected", socket.id);
   });
 });
-
 // Connect to database then it wll  stat thee server
 server.listen(port, () => {
   console.log(`Server running on port ${port}`);

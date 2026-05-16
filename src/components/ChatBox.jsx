@@ -66,7 +66,12 @@ const ChatBox = ({ userId, helperId, role }) => {
           }}>
             {msg.message}
             <div style={{ fontSize: "10px", opacity: 0.6, marginTop: "4px" }}>
-              {new Date(msg.timestamp).toLocaleTimeString()}
+              {msg.timestamp
+  ? new Date(msg.timestamp).toLocaleTimeString('en-IN', {
+      hour: '2-digit',
+      minute: '2-digit'
+    })
+  : "Just now"}
             </div>
           </div>
         ))}
