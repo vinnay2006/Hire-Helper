@@ -1,7 +1,10 @@
 import { useEffect, useState, useRef } from "react";
 import { io } from "socket.io-client";
 
-const socket = io("https://hire-helper-3.onrender.com");
+const socket = io("https://hire-helper-3.onrender.com", {
+  transports: ["polling"],  //  it wll ty to Frce poling & skip WebSoket
+  upgrade: false,          
+});
 
 const ChatBox = ({ userId, helperId, role }) => {
   const roomId = [userId, helperId].sort().join("_");

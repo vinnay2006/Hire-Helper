@@ -95,17 +95,15 @@ const io = new Server(server, {
     ],
     methods: ["GET", "POST"],
     credentials: true
-  }
+  },
+  transports: ["polling"],   
+  allowUpgrades: false,    
 });
 
 
 let data = { value: "Initial Data" };
 
- // Example:  data changes here automatically after every 1s
-  setInterval(() => {
-     data.value = "Updated at " + new Date().toLocaleTimeString();
-    io.emit("dataUpdate", data);  
-  }, 1000);
+ 
 
 io.on("connection", (socket) => {
   console.log("Client connected", socket.id);

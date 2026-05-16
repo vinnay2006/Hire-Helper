@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { io } from "socket.io-client";
+
+
 
 import './App.css';
 import Navbar from './components/Navbar';
@@ -21,21 +21,11 @@ import Feedback from './components/Feedback';
 import Details from './components/Details';
 import CallRoom from './components/CallRoom';
 
-const socket = io("https://hire-helper-3.onrender.com");
+
 
 function App() {
 
-  useEffect(() => {
-    const handleSocket = (data) => {
-      console.log("server says", data);
-    };
-
-    socket.on("detailsReceived", handleSocket);
-
-    return () => {
-      socket.off("detailsReceived", handleSocket);
-    };
-  }, []);
+ 
 
   return (
     <>
