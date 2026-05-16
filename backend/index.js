@@ -12,7 +12,7 @@ const Razorpay=require("razorpay");
 
 
 const app = express();
-const port = process.env.port;
+const port = process.env.PORT||5000;
 const Message = require('./models/Message');
 // for  middlewares
 
