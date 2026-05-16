@@ -19,10 +19,12 @@ const Message = require('./models/Message');
 app.use(cors({
   origin: [
     "https://hire-helper-t5k9.vercel.app",
-    "https://hire-helper-t5k9-ik8jqvuo9-vinay-kumars-projects-24578a9e.vercel.app"
+    "https://hire-helper-t5k9-ik8jqvuo9-vinay-kumars-projects-24578a9e.vercel.app",
+    "http://localhost:3000"  // for local development
   ],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "auth-token"]
+  allowedHeaders: ["Content-Type", "auth-token"],
+  credentials: true
 }));
 
 app.use(express.urlencoded({extended:false}));
@@ -87,10 +89,12 @@ const { Server } = require("socket.io");
 const io = new Server(server, {
   cors: {
     origin: [
-       "https://hire-helper-t5k9.vercel.app",
-    "https://hire-helper-t5k9-ik8jqvuo9-vinay-kumars-projects-24578a9e.vercel.app"
+      "https://hire-helper-t5k9.vercel.app",
+      "https://hire-helper-t5k9-ik8jqvuo9-vinay-kumars-projects-24578a9e.vercel.app",
+      "http://localhost:3000"
     ],
-    methods: ["GET", "POST"]
+    methods: ["GET", "POST"],
+    credentials: true
   }
 });
 
