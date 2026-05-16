@@ -1,6 +1,5 @@
 
 
-
 import './App.css';
 import Navbar from './components/Navbar';
 import Tracker from './components/Tracker';
@@ -21,20 +20,13 @@ import Feedback from './components/Feedback';
 import Details from './components/Details';
 import CallRoom from './components/CallRoom';
 
-
-
 function App() {
-
- 
-
   return (
     <>
       <AuthState>
         <HelperState>
           <div className="App">
-
             <Navbar />
-
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
@@ -51,7 +43,6 @@ function App() {
               <Route path="/tracker" element={<Tracker />} />
               <Route path="/callroom/:roomId" element={<CallRoom />} />
             </Routes>
-
           </div>
         </HelperState>
       </AuthState>

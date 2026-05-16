@@ -1,91 +1,74 @@
 require("dotenv").config();
 
-
-
-
 const connectToMongo = require('./db');
 const express = require('express');
 const cors = require('cors');
-const crypto=require("crypto");
-const Razorpay=require("razorpay");
-
-
+const crypto = require("crypto");
+const Razorpay = require("razorpay");
+const http = require("http");
+const { Server } = require("socket.io");
 
 const app = express();
-const port = process.env.PORT||5000;
-const Message = require('./models/Message');
-// for  middlewares
 
+//for render we are using PORT instead of port
+const port = process.env.PORT || process.env.port || 5000;
+
+// cors fixxing 
 app.use(cors({
   origin: [
     "https://hire-helper-t5k9.vercel.app",
     "https://hire-helper-t5k9-ik8jqvuo9-vinay-kumars-projects-24578a9e.vercel.app",
-    "http://localhost:3000"  // for local development
+    "http://localhost:3000"
   ],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "auth-token"],
   credentials: true
 }));
 
-app.use(express.urlencoded({extended:false}));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-
-app.post('/order',async (req,res)=>{
+// here are the Razorpay routes
+app.post('/order', async (req, res) => {
   try {
-     const razorpay=new Razorpay({
-    key_id: process.env.RAZORPAY_KEY_ID,
-    key_secret:process.env.RAZORPAY_SECRET,
-  });
-     const options = req.body;
-  const order=await razorpay.orders.create(options);
- 
-  if(!order){
-    return res.status(500).send("ERROR");
-  }
-   res.json(order); 
+    const razorpay = new Razorpay({
+      key_id: process.env.RAZORPAY_KEY_ID,
+      key_secret: process.env.RAZORPAY_SECRET,
+    });
+    const options = req.body;
+    const order = await razorpay.orders.create(options);
+    if (!order) return res.status(500).send("ERROR");
+    res.json(order);
   } catch (error) {
-    console.log(error);
-   res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
-
-
 });
-app.post("/order/validate",async(req,res)=>{
-const {razorpay_order_id,razorpay_payment_id,razorpay_signature}=req.body;
-const sha=crypto.createHmac("sha256",process.env.RAZORPAY_SECRET);
-sha.update(`${razorpay_order_id}|${razorpay_payment_id}`);
-const digest=sha.digest("hex");
-if(digest!==razorpay_signature){
-  return res.status(400).json({msg:"transaction is not legit!"});
-}
-res.json({
-  msg:"success",
-  orderId:razorpay_order_id,
-  paymentiId:razorpay_payment_id,
-})
-})
+
+app.post("/order/validate", async (req, res) => {
+  const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+  const sha = crypto.createHmac("sha256", process.env.RAZORPAY_SECRET);
+  sha.update(`${razorpay_order_id}|${razorpay_payment_id}`);
+  const digest = sha.digest("hex");
+  if (digest !== razorpay_signature) {
+    return res.status(400).json({ msg: "transaction is not legit!" });
+  }
+  res.json({
+    msg: "success",
+    orderId: razorpay_order_id,
+    paymentId: razorpay_payment_id,
+  });
+});
 
 app.get('/', (req, res) => {
   res.send('Hello World! Vinay is on fire');
 });
-app.use('/api/chat', require('./routes/chat'));
-
 
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/HelperAuth', require('./routes/HelperAuth'));
 
-
-
-
-
-
-// making HTTP server from express app
-const http = require("http");
+//  HTTP + Socket.io server
 const server = http.createServer(app);
 
-// Initialize Socket.IO on the same server--->will  be implemented in coming stage 
-const { Server } = require("socket.io");
 const io = new Server(server, {
   cors: {
     origin: [
@@ -96,30 +79,23 @@ const io = new Server(server, {
     methods: ["GET", "POST"],
     credentials: true
   },
-  transports: ["polling"],   
-  allowUpgrades: false,    
+  //  it is for polling alongside websockets
+  transports: ["polling", "websocket"],
+  allowUpgrades: true,
+  pingTimeout: 60000,
+  pingInterval: 25000,
 });
 
-
-let data = { value: "Initial Data" };
-
- 
-
+//  ---socket logic--
 io.on("connection", (socket) => {
   console.log("Client connected", socket.id);
 
-  // code is for joing a chat room btw user and helper
   socket.on("joinRoom", (roomId) => {
     socket.join(roomId);
-    console.log(`Joined room: ${roomId}`);
   });
 
-  //this is for sending and saving the mesaages
   socket.on("sendMessage", async (data) => {
-    const { roomId, senderId, senderRole, message } = data;
-    const newMsg = new Message({ roomId, senderId, senderRole, message });
-    await newMsg.save();
-    io.to(roomId).emit("receiveMessage", newMsg);
+    io.to(data.roomId).emit("receiveMessage", data);
   });
 
   socket.on("disconnect", () => {
@@ -127,8 +103,8 @@ io.on("connection", (socket) => {
   });
 });
 
-// Starting the combined server
+// Connect to database then it wll  stat thee server
 server.listen(port, () => {
-  console.log(`Server (Express + Socket.IO) running on port ${port}`);
+  console.log(`Server running on port ${port}`);
   connectToMongo();
 });
