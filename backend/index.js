@@ -103,7 +103,7 @@ io.on("connection", (socket) => {
       await newMsg.save();
 
       // it wll Send to other person in room only 
-      socket.to(roomId).emit("receiveMessage", newMsg);
+      io.to(roomId).emit("receiveMessage", newMsg);
 
     } catch (err) {
       console.error("Message error:", err);

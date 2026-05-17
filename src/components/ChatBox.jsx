@@ -46,27 +46,21 @@ const ChatBox = ({ roomId, senderId, role }) => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  const sendMessage = () => {
-    if (!input.trim()) return;
+const sendMessage = () => {
+  if (!input.trim()) return;
 
-    const msgData = {
-      roomId,
-      senderId,
-      senderRole: role,
-      message: input,
-      timestamp: new Date()
-    };
-
-    console.log("Sending message:", msgData); 
-
-   
-    setMessages(prev => [...prev, msgData]);
-
-  
-    socket.emit("sendMessage", msgData);
-
-    setInput("");
+  const msgData = {
+    roomId,
+    senderId,
+    senderRole: role,
+    message: input,
+    timestamp: new Date()
   };
+
+  // Only send to server — server will echo back to everyone
+  socket.emit("sendMessage", msgData);
+  setInput("");
+};
 
   return (
     <div style={{
