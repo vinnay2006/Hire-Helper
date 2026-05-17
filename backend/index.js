@@ -92,18 +92,21 @@ io.on("connection", (socket) => {
 
   socket.on("joinRoom", (roomId) => {
     socket.join(roomId);
-    console.log("Joined room:", roomId);
+    console.log(`Socket ${socket.id} joined room: ${roomId}`);
   });
-
 
   socket.on("sendMessage", async (data) => {
     try {
+      const Message = require('./models/Message');
       const { roomId, senderId, senderRole, message } = data;
       const newMsg = new Message({ roomId, senderId, senderRole, message });
       await newMsg.save();
-      io.to(roomId).emit("receiveMessage", newMsg); // ← sends to both!
+
+      // it wll Send to other person in room only 
+      socket.to(roomId).emit("receiveMessage", newMsg);
+
     } catch (err) {
-      console.error("Message save error:", err);
+      console.error("Message error:", err);
     }
   });
 

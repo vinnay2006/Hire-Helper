@@ -38,8 +38,8 @@ function HelperDashboard() {
     <h6 className="card-title">Date :{presenties.date}</h6>
   <button className='btn btn-primary mx-1 ' onClick={handleCall}> CALL</button>
 <ChatBox
-  userId={presenties.user?._id}
-  helperId={details?._id}
+roomId={presenties?._id}
+  senderId={details?._id}
   role="helper"
 />
   </div> 

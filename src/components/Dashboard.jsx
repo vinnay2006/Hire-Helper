@@ -168,8 +168,8 @@ console.log(jsonRes);
          <button className='btn btn-primary mx-1 ' onClick={handleCall}> CALL</button>
           <button className='btn btn-primary mx-1 '   onClick={(e) => paymentHandler(presenties.charges, e)} >Pay</button>
           <ChatBox
-  userId={details?._id}
-  helperId={presenties.helper}
+  roomId={presenties?._id}
+  senderId={details?._id}
   role="user"
 />
   <Link to="/tracker"> map</Link>
