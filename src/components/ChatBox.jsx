@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { io } from "socket.io-client";
 
-// it will create socket outsde the component 
 const socket = io("https://hire-helper-3.onrender.com", {
   transports: ["polling"],
   upgrade: false,
@@ -15,52 +14,45 @@ const ChatBox = ({ roomId, senderId, role }) => {
   useEffect(() => {
     if (!roomId) return;
 
-    // Join room
     socket.emit("joinRoom", roomId);
-    console.log("Joined room:", roomId); 
 
-    //it is for  Loading old messages
+    // Load old messages
     fetch(`https://hire-helper-3.onrender.com/api/chat/${roomId}`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) setMessages(data);
       })
-      .catch(err => console.error("Failed to load messages:", err));
+      .catch(err => console.error("Failed:", err));
 
-
+    // ✅ Receive ALL messages (own + other person)
     const handleReceive = (msg) => {
-      console.log("Received message:", msg); // ← debug
       setMessages(prev => [...prev, msg]);
     };
 
     socket.on("receiveMessage", handleReceive);
 
-   
     return () => {
       socket.off("receiveMessage", handleReceive);
     };
   }, [roomId]);
 
-
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-const sendMessage = () => {
-  if (!input.trim()) return;
+  const sendMessage = () => {
+    if (!input.trim()) return;
 
-  const msgData = {
-    roomId,
-    senderId,
-    senderRole: role,
-    message: input,
-    timestamp: new Date()
+    socket.emit("sendMessage", {
+      roomId,
+      senderId,
+      senderRole: role,
+      message: input,
+      timestamp: new Date()
+    });
+
+    setInput(""); // ← Clear input only, server echoes message back
   };
-
-  // Only send to server — server will echo back to everyone
-  socket.emit("sendMessage", msgData);
-  setInput("");
-};
 
   return (
     <div style={{
@@ -70,17 +62,15 @@ const sendMessage = () => {
       maxWidth: "400px",
       margin: "20px auto"
     }}>
-      
       <div style={{
         background: "#3399cc",
         color: "white",
         padding: "12px",
         fontWeight: "bold"
       }}>
-        💬 Chat {role === "helper" ? "(Helper)" : "(User)"}
+        💬 Chat
       </div>
 
-     
       <div style={{
         height: "300px",
         overflowY: "auto",
@@ -91,7 +81,7 @@ const sendMessage = () => {
         gap: "8px"
       }}>
         {messages.length === 0 && (
-          <p style={{ textAlign: "center", color: "#aaa" }}>
+          <p style={{ textAlign: "center", color: "#aaa", marginTop: "40%" }}>
             No messages yet. Say hi! 👋
           </p>
         )}
@@ -121,7 +111,6 @@ const sendMessage = () => {
         <div ref={bottomRef} />
       </div>
 
-   
       <div style={{
         display: "flex",
         padding: "10px",
