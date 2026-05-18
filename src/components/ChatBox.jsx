@@ -12,7 +12,7 @@ const ChatBox = ({ roomId, senderId, role }) => {
   const bottomRef = useRef(null);
 
   useEffect(() => {
-    if (!roomId||senderId){console.log("misssing :",{roomId,senderId});
+    if (!roomId||!senderId){console.log("misssing :",{roomId,senderId});
   return;}
   console.log("chat ready:",{roomId,senderId});
 
