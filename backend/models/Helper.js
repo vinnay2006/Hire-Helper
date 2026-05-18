@@ -40,6 +40,11 @@ const HelperSchema = new mongoose.Schema({
     required: true,
   default:"0 ",
   },
+  liveLocation:{
+    latitude:{type:Number,defaults:0},
+    longitude:{type:Number,default:0},
+    updateAt:{type:Date,default:Date.now}
+  },
   available: {
     type: Boolean,
     default: false,

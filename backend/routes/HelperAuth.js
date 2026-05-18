@@ -161,4 +161,34 @@ router.get('/getClient',fetchhelper, async(req,res)=>{
     
     res.json({ client });
   });
+  
+// Helper updates their live location
+router.post('/updatelocation', fetchhelper, async (req, res) => {
+  try {
+    const { latitude, longitude } = req.body;
+
+    await Helper.findByIdAndUpdate(req.helper.id, {
+      liveLocation: {
+        latitude,
+        longitude,
+        updatedAt: new Date()
+      }
+    });
+
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Get helper's live location 
+router.get('/getlocation/:helperId', async (req, res) => {
+  try {
+    const helper = await Helper.findById(req.params.helperId)
+      .select('liveLocation name');
+    res.json(helper);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 module.exports=router

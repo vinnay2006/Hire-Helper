@@ -1,6 +1,7 @@
 import React, { useContext,useEffect } from 'react'
 import HelperContext from "../context/helpers/HelperContext"
 import ChatBox from './ChatBox';
+import Tracker from './Tracker';
 import AuthContext from "../context/helpers/AuthContext";
 import {useNavigate} from "react-router-dom"
 function HelperDashboard() {
@@ -39,6 +40,11 @@ function HelperDashboard() {
      <h6 className="card-title">charges :{presenties.user?.location}</h6><br/>
     <h6 className="card-title">Date :{presenties.date}</h6>
   <button className='btn btn-primary mx-1 ' onClick={handleCall}> CALL</button>
+  <Tracker
+  presenties={presenties}
+  role="helper"
+  details={details}
+/>
 <ChatBox
 roomId={presenties?._id}
   senderId={details?._id}

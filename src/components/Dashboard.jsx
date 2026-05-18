@@ -1,5 +1,6 @@
 import React, { useContext,useEffect } from 'react'
 import ChatBox from './ChatBox';
+import Tracker from './Tracker';
 import AuthContext from "../context/helpers/AuthContext";
 import HelperContext from "../context/helpers/HelperContext"
 import {useNavigate,Link} from "react-router-dom"
@@ -174,8 +175,11 @@ clientDetails();
   senderId={details?._id}
   role="user"
 />
-  <Link to="/tracker"> map</Link>
-{/* <i class="fas fa-map-marker-alt" ></i> */}
+<Tracker
+  presenties={presenties}
+  role="user"
+  details={details}
+/>
     </p>
    
 

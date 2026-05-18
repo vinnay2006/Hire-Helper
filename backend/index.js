@@ -95,6 +95,22 @@ io.on("connection", (socket) => {
     console.log(`Joined room: ${roomId}`);
   });
 
+
+socket.on("updateLocation", async (data) => {
+  const { helperId, latitude, longitude, roomId } = data;
+
+  // it will save to db
+  await Helper.findByIdAndUpdate(helperId, {
+    liveLocation: { latitude, longitude, updatedAt: new Date() }
+  });
+
+  //sends to user in same room
+  socket.to(roomId).emit("helperLocationUpdate", {
+    latitude,
+    longitude
+  });
+});
+
   socket.on("sendMessage", async (data) => {
     try {
       const { roomId, senderId, senderRole, message } = data;
@@ -107,7 +123,7 @@ io.on("connection", (socket) => {
       });
       await newMsg.save();
 
-      // ✅ Send to ALL in room
+      //  Send to ALL in room
       io.to(roomId).emit("receiveMessage", newMsg);
       console.log(`Message in room ${roomId}:`, message);
 
