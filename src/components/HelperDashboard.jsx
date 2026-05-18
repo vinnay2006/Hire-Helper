@@ -5,11 +5,13 @@ import AuthContext from "../context/helpers/AuthContext";
 import {useNavigate} from "react-router-dom"
 function HelperDashboard() {
   const context=useContext(HelperContext);
-  const { details } = useContext(AuthContext);
+  const { details,clientDetails } = useContext(AuthContext);
    const {Helperpresent,HelperPresent}=context;
     useEffect(() => {
+      clientDetails();
  HelperPresent();
-  }, [HelperPresent]); const handleCall=()=>{
+//eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); const handleCall=()=>{
    
       const roomId= prompt("enter the room no to start a video call with the helper");
       console.log(roomId);

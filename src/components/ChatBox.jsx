@@ -12,7 +12,9 @@ const ChatBox = ({ roomId, senderId, role }) => {
   const bottomRef = useRef(null);
 
   useEffect(() => {
-    if (!roomId) return;
+    if (!roomId||senderId){console.log("misssing :",{roomId,senderId});
+  return;}
+  console.log("chat ready:",{roomId,senderId});
 
     socket.emit("joinRoom", roomId);
 
@@ -24,7 +26,7 @@ const ChatBox = ({ roomId, senderId, role }) => {
       })
       .catch(err => console.error("Failed:", err));
 
-    // ✅ Receive ALL messages (own + other person)
+    //  Receive ALL messages (own + other person)
     const handleReceive = (msg) => {
       setMessages(prev => [...prev, msg]);
     };
@@ -34,7 +36,7 @@ const ChatBox = ({ roomId, senderId, role }) => {
     return () => {
       socket.off("receiveMessage", handleReceive);
     };
-  }, [roomId]);
+  }, [roomId,senderId]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });

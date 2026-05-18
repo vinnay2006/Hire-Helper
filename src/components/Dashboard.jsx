@@ -81,12 +81,14 @@ console.log(jsonRes);
   }
   const navigate=useNavigate();
   const context=useContext(HelperContext);
-  const { details } = useContext(AuthContext);
+  const { details,clientDetails } = useContext(AuthContext);
   const {history,userHistory,present,userPresent}=context;
     useEffect(() => {
+clientDetails();
     userHistory();
     userPresent();
-  }, [userHistory, userPresent]);
+    //eslint-disable-next-line react-hooks/exhaustive-deps 
+  }, []);
   const handleDeactivate=async(id)=>{
      try {
       const response = await fetch(`https://hire-helper-3.onrender.com/api/auth/deleteActiveUser/${id}`, {
